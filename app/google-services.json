@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "426234645201",
+    "project_id": "osu-bathroom-app",
+    "storage_bucket": "osu-bathroom-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426234645201:android:0ac0fdfe3dda5fd30c53f0",
+        "android_client_info": {
+          "package_name": "com.example.osu_bathroom_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426234645201-6hv637s8sqrv8ljj9mbsbmc7vf7gopn4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.osu_bathroom_app",
+            "certificate_hash": "08596bc8a2f15f2a88ca95ee5ade30da6b47010b"
+          }
+        },
+        {
+          "client_id": "426234645201-vk5pthpk5uui78o2s6cldb0or9kkkrh1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9XO_yE-Io4dihodliUVTEkuMCJ621GLs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426234645201-vk5pthpk5uui78o2s6cldb0or9kkkrh1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
