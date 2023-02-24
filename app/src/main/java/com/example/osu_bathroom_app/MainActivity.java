@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.fragment_container_view, HomePageFragment.class, null)
+                    .add(R.id.fragment_container_view, LoginFragment.class, null)
                     .commit();
         }
         Log.i(TAG, "OnCreate");
