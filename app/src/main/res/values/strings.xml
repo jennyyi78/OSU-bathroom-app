@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">OSU-Bathroom-App</string>
+    <string name="hello_fragment">This is the fragment speaking!</string>
 </resources>
