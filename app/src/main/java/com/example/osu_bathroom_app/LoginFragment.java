@@ -44,7 +44,7 @@ public class LoginFragment extends Fragment {
         loginBtn = view.findViewById(R.id.loginButton);
         linkToRegisterBtn = view.findViewById(R.id.linkToRegisterButton);
 
-        Log.d("create", "Test2");
+        Log.i("Activities", "OnCreateView");
 
         // Set on Click Listener on login button
         loginBtn.setOnClickListener(new View.OnClickListener() {

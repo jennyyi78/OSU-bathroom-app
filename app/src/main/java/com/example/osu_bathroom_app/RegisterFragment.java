@@ -70,7 +70,7 @@ public class RegisterFragment extends Fragment {
         String username, password;
         username = usernameTextView.getText().toString();
         password = passwordTextView.getText().toString();
-
+        Log.i("register",""+password);
         // Validations for input email and password
         if (TextUtils.isEmpty(username)) {
             Toast.makeText(getActivity().getApplicationContext(),
