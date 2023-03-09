@@ -1,31 +1,49 @@
 package com.example.osu_bathroom_app;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-public class HomePageFragment extends Fragment {
+
+public class HomePageFragment extends Fragment
+{
 
     View view;
+    Button toBathroomMap;
     Button toBathroomListBtn;
+    Button toFavorites;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
-        view=inflater.inflate(R.layout.fragment_home_page, container, false);
-        toBathroomListBtn=view.findViewById(R.id.bathroom_list_btn);
+        view = inflater.inflate(R.layout.fragment_home_page, container, false);
 
-        toBathroomListBtn.setOnClickListener(new View.OnClickListener() {
+        toBathroomMap = view.findViewById(R.id.map_btn);
+        toBathroomListBtn = view.findViewById(R.id.bathroom_list_btn);
+        toFavorites = view.findViewById(R.id.favorites_btn);
+
+        toFavorites.setEnabled(false); //TODO - implement the favorites page, for now it will be unusable
+        toBathroomMap.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
+                replaceFragment(new MapFragment());
+            }
+        });
+        toBathroomListBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
                 replaceFragment(new BathroomListFragment());
             }
         });
@@ -34,12 +52,14 @@ public class HomePageFragment extends Fragment {
         return view;
     }
 
-    private void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment)
+    {
 
-        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container_view,fragment);
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container_view, fragment);
         fragmentTransaction.commit();
 
     }
+
 }
