@@ -1,4 +1,4 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.list_page;
 
 
 import android.content.Context;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.osu_bathroom_app.R;
+import com.example.osu_bathroom_app.models.Bathroom;
 
 import java.util.List;
 
@@ -72,10 +75,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         @Override
         public void onClick(View view)
         {
-
             onNoteListener.onNoteClick(getAdapterPosition());
-
-
         }
 
     }
@@ -83,7 +83,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     public interface OnNoteListener
     {
         void onNoteClick(int position);
-
-
     }
 }

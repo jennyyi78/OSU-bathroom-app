@@ -1,4 +1,4 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.list_page;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.osu_bathroom_app.R;
+import com.example.osu_bathroom_app.models.Bathroom;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

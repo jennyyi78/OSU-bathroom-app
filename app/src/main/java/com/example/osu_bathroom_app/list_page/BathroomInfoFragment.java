@@ -1,4 +1,4 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.list_page;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.osu_bathroom_app.R;
 
 
 public class BathroomInfoFragment extends DialogFragment implements View.OnTouchListener, GestureDetector.OnGestureListener

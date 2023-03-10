@@ -1,4 +1,4 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,10 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.osu_bathroom_app.list_page.BathroomListFragment;
+import com.example.osu_bathroom_app.R;
+import com.example.osu_bathroom_app.map.MapFragment;
 
 
 public class HomePageFragment extends Fragment
@@ -54,7 +58,6 @@ public class HomePageFragment extends Fragment
 
     private void replaceFragment(Fragment fragment)
     {
-
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container_view, fragment);

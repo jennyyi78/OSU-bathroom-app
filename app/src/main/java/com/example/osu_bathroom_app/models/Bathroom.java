@@ -1,4 +1,4 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.models;
 
 public class Bathroom
 {

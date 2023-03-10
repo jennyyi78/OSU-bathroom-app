@@ -1,4 +1,4 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.list_page;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +21,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.osu_bathroom_app.R;
+import com.example.osu_bathroom_app.models.Bathroom;
+import com.example.osu_bathroom_app.models.BathroomListViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
