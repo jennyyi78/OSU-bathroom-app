@@ -63,7 +63,5 @@ public class AddBathroomFragment extends Fragment
         BathroomListFragment frag = new BathroomListFragment();
         fragmentTransaction.replace(R.id.fragment_container_view, frag);
         fragmentTransaction.commit();
-
-
     }
 }

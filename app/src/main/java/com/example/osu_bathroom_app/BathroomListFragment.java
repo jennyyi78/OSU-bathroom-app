@@ -79,17 +79,11 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
             @Override
             public void onChanged(List<Bathroom> bathrooms)
             {
-
-
                 adapter.notifyDataSetChanged();
             }
         });
 
-
         initRecyclerView();
-
-
-
 
         /*if (getActivity().getSupportFragmentManager().findFragmentById(R.id.frame_layout)==null)
         {
@@ -116,7 +110,6 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
 
                         //mViewModel.addBathroom(new Bathroom("test","4"));
                         //Log.i("help",""+mViewModel.getBathrooms().getValue().size());
-
                     }
                 });
             }
@@ -149,21 +142,16 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
             }
         }, 600);
 
-
         return view;
     }
 
     private void initRecyclerView()
     {
-
         adapter = new RecyclerAdapter(this.getContext(), mViewModel.getBathrooms().getValue(), this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(adapter);
-
-
     }
-
 
     private void infoFragment(String name, String address)
     {
@@ -181,8 +169,6 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
         add.setEnabled(false);
         sort.setEnabled(false);
         spinner.setEnabled(false);
-
-
     }
 
     @Override

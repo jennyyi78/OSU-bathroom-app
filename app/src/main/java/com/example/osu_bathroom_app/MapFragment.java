@@ -7,30 +7,37 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.mapbox.maps.MapView;
+import com.mapbox.maps.Style;
+
+
 public class MapFragment extends Fragment
 {
-    private final String TAG = "MapFragment";
+    MapView mapView;
 
     public MapFragment()
     {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState)
+    public static MapFragment newInstance()
     {
-        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
+        MapFragment fragment = new MapFragment();
+
+        return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false);
+        View v = inflater.inflate(R.layout.fragment_map, container, false);
+        mapView = v.findViewById(R.id.mapView);
+        if(mapView != null)
+        {
+            mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS);
+        }
+
+        return v;
     }
 }
