@@ -40,7 +40,7 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                replaceFragment(new HomePageFragment());
+                getParentFragmentManager().popBackStack();
             }
         });
 
@@ -55,15 +55,6 @@ public class UserProfileFragment extends Fragment {
     private void showUserDetails(FirebaseUser user) {
         String email = user.getEmail();
         welcomeTextView.setText("Welcome, " + email + "!");
-
-    }
-
-    private void replaceFragment(Fragment fragment) {
-
-        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container_view,fragment);
-        fragmentTransaction.commit();
 
     }
 
