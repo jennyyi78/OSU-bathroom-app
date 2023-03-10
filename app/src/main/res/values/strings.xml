@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">OSU-Bathroom-App</string>
     <string name="hello_fragment">This is the fragment speaking!</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="mapbox_access_token">pk.eyJ1IjoiZ3JhY2UtY29kZXIzMTEiLCJhIjoiY2xjdHMxdnFyMGRtaDNwcXBubmQxaG5nZCJ9.VsZgdjfXS3t2pRY07bfWAA</string>
     <string-array name="sorting">
         <item>A-Z</item>
         <item>Z-A</item>

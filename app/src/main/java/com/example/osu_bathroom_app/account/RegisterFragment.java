@@ -1,12 +1,5 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.account;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,12 +10,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.example.osu_bathroom_app.R;
+import com.example.osu_bathroom_app.account.LoginFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends Fragment
+{
 
     View view;
     private EditText usernameTextView, passwordTextView;
@@ -30,11 +31,13 @@ public class RegisterFragment extends Fragment {
     private Button backBtn;
     private FirebaseAuth mAuth;
     private final String TAG = "MainActivity";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
-        view= inflater.inflate(R.layout.fragment_register, container, false);
+        view = inflater.inflate(R.layout.fragment_register, container, false);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -42,8 +45,9 @@ public class RegisterFragment extends Fragment {
         usernameTextView = view.findViewById(R.id.username);
         passwordTextView = view.findViewById(R.id.password);
         registerBtn = view.findViewById(R.id.registerButton);
-        backBtn=view.findViewById((R.id.backbtn));
-        registerBtn.setOnClickListener(new View.OnClickListener() {
+        backBtn = view.findViewById((R.id.backbtn));
+        registerBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
@@ -51,7 +55,8 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
+        backBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
@@ -70,7 +75,7 @@ public class RegisterFragment extends Fragment {
         String username, password;
         username = usernameTextView.getText().toString();
         password = passwordTextView.getText().toString();
-        Log.i("register",""+password);
+        Log.i("register", "" + password);
         // Validations for input email and password
         if (TextUtils.isEmpty(username)) {
             Toast.makeText(getActivity().getApplicationContext(),
@@ -88,40 +93,41 @@ public class RegisterFragment extends Fragment {
         }
 
         // create new user or register new user
-        mAuth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>()
+        {
 
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task)
-                    {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getActivity().getApplicationContext(),
-                                            "Registration successful!",
-                                            Toast.LENGTH_LONG)
-                                    .show();
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task)
+            {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getActivity().getApplicationContext(),
+                                    "Registration successful!",
+                                    Toast.LENGTH_LONG)
+                            .show();
 
 
-                            replaceFragment(new LoginFragment());
-                        }
-                        else {
+                    replaceFragment(new LoginFragment());
+                } else {
 
-                            // Registration failed
-                            Toast.makeText(
-                                            getActivity().getApplicationContext(),
-                                            "Registration failed!!"
-                                                    + " Please try again later",
-                                            Toast.LENGTH_LONG)
-                                    .show();
+                    // Registration failed
+                    Toast.makeText(
+                                    getActivity().getApplicationContext(),
+                                    "Registration failed!!"
+                                            + " Please try again later",
+                                    Toast.LENGTH_LONG)
+                            .show();
 
-                        }
-                    }
-                });
+                }
+            }
+        });
     }
 
-    private void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment)
+    {
 
-        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container_view,fragment);
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container_view, fragment);
         fragmentTransaction.commit();
 
     }

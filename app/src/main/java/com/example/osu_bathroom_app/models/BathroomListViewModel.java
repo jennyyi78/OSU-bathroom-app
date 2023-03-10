@@ -1,8 +1,5 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.models;
 
-import android.annotation.SuppressLint;
-import android.os.AsyncTask;
-import android.os.Handler;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -11,22 +8,22 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-public class BathroomListViewModel extends ViewModel {
+public class BathroomListViewModel extends ViewModel
+{
     private MutableLiveData<List<Bathroom>> mBathrooms;
     private BathroomRepository mRepo;
 
-    public void init(){
-        if(mBathrooms!=null)
-        {
+    public void init()
+    {
+        if (mBathrooms != null) {
             return;
         }
-        mRepo=BathroomRepository.getInstance();
-        mBathrooms=mRepo.getBathrooms();
-        Log.i("Help","Me");
-
-
+        mRepo = BathroomRepository.getInstance();
+        mBathrooms = mRepo.getBathrooms();
+        Log.i("Help", "Me");
 
     }
+
     public LiveData<List<Bathroom>> getBathrooms()
     {
         return mBathrooms;
@@ -35,13 +32,11 @@ public class BathroomListViewModel extends ViewModel {
 
     public void addBathroom(final Bathroom bathroom)
     {
-                List<Bathroom> currentList = mBathrooms.getValue();
-                currentList.add(bathroom);
-                mBathrooms.postValue(currentList);
-
-
-
+        List<Bathroom> currentList = mBathrooms.getValue();
+        currentList.add(bathroom);
+        mBathrooms.postValue(currentList);
     }
+
     public void resetBathroom()
     {
         List<Bathroom> currentList = mBathrooms.getValue();

@@ -1,12 +1,5 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.account;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,13 +10,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.example.osu_bathroom_app.main.HomePageFragment;
+import com.example.osu_bathroom_app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment
+{
     private final String TAG = "LoginFragment";
     View view;
     private EditText usernameTextView, passwordTextView;
@@ -33,9 +34,10 @@ public class LoginFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
 
-        view= inflater.inflate(R.layout.fragment_login, container, false);
+        view = inflater.inflate(R.layout.fragment_login, container, false);
         mAuth = FirebaseAuth.getInstance();
 
         // Initialize views
@@ -47,7 +49,8 @@ public class LoginFragment extends Fragment {
         Log.i("Activities", "OnCreateView");
 
         // Set on Click Listener on login button
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        loginBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
@@ -56,7 +59,8 @@ public class LoginFragment extends Fragment {
         });
 
         // set listener on link to register button
-        linkToRegisterBtn.setOnClickListener(new View.OnClickListener() {
+        linkToRegisterBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
@@ -96,7 +100,8 @@ public class LoginFragment extends Fragment {
         // login existing user
         mAuth.signInWithEmailAndPassword(username, password)
                 .addOnCompleteListener(
-                        new OnCompleteListener<AuthResult>() {
+                        new OnCompleteListener<AuthResult>()
+                        {
                             @Override
                             public void onComplete(
                                     @NonNull Task<AuthResult> task)
@@ -110,9 +115,7 @@ public class LoginFragment extends Fragment {
                                     // if sign-in is successful
                                     // intent to home activity
                                     replaceFragment(new HomePageFragment());
-                                }
-
-                                else {
+                                } else {
 
                                     // sign-in failed
                                     Toast.makeText(getActivity().getApplicationContext(),
@@ -125,12 +128,11 @@ public class LoginFragment extends Fragment {
                         });
     }
 
-    private void replaceFragment(Fragment fragment) {
-
-        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container_view,fragment);
+    private void replaceFragment(Fragment fragment)
+    {
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container_view, fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
     }
 }
