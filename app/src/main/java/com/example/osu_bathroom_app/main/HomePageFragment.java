@@ -58,11 +58,10 @@ public class HomePageFragment extends Fragment
 
     private void replaceFragment(Fragment fragment)
     {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container_view, fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
     }
 
 }

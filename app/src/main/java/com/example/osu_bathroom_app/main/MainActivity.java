@@ -1,5 +1,6 @@
 package com.example.osu_bathroom_app.main;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
                     .add(R.id.fragment_container_view, LoginFragment.class, null)
+                    .addToBackStack(null)
                     .commit();
         }
         Log.i(TAG, "OnCreate");
@@ -65,6 +67,18 @@ public class MainActivity extends AppCompatActivity
     {
         super.onDestroy();
         Log.i(TAG, "OnDestroy");
+    }
+
+    @Override
+    public void onBackPressed(){
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            Log.i("MainActivity", "popping backstack");
+            fm.popBackStack();
+        } else {
+            Log.i("MainActivity", "nothing on backstack, calling super");
+            super.onBackPressed();
+        }
     }
 
 }
