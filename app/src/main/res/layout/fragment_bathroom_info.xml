@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     app:cardBackgroundColor="@color/teal_200"
-    tools:context=".BathroomInfoFragment"
+    tools:context=".ui.BathroomInfoFragment"
     app:cardCornerRadius="10dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"

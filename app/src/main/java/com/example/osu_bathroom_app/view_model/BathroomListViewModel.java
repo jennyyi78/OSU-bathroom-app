@@ -1,10 +1,13 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.view_model;
 
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.osu_bathroom_app.repository.BathroomRepository;
+import com.example.osu_bathroom_app.model.Bathroom;
 
 import java.util.List;
 
@@ -34,13 +37,26 @@ public class BathroomListViewModel extends ViewModel
     {
         List<Bathroom> currentList = mBathrooms.getValue();
         currentList.add(bathroom);
-        mBathrooms.postValue(currentList);
+        mBathrooms.setValue(currentList);
+    }
+
+    public void removeBathroom(int position)
+    {
+        List<Bathroom> currentList = mBathrooms.getValue();
+
+        mRepo.removeBathrooms(currentList.get(position).getId());
+        currentList.remove(position);
+        mBathrooms.setValue(currentList);
     }
 
     public void resetBathroom()
     {
+        Log.i("Reset","test");
         List<Bathroom> currentList = mBathrooms.getValue();
 
-        mBathrooms.postValue(null);
+        mBathrooms.setValue(currentList);
+
     }
+
+
 }

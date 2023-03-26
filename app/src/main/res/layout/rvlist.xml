@@ -6,29 +6,25 @@
     android:layout_margin="16dp"
     app:cardCornerRadius="10dp">
 
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal">
-            
             <TextView
-                android:id="@+id/bathroom_name"
+                android:id="@+id/review_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="Ratings"
                 android:textColor="@color/black"
                 android:textSize="26sp"
                 android:textStyle="bold">
 
-
             </TextView>
 
         </LinearLayout>
@@ -38,39 +34,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal">
-
             <TextView
-                android:id="@+id/bathroom_address"
+                android:id="@+id/review_summary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address"
-                android:textColor="@color/purple_200"
-                android:textSize="20sp"
+                android:text="Review"
+                android:textColor="@color/black"
+                android:textSize="26sp"
                 android:textStyle="bold">
 
             </TextView>
 
         </LinearLayout>
-
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:layout_marginLeft="140dp">
-
-
-        <Button
-            android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Delete"
-            >
-
-        </Button>
 
     </LinearLayout>
 

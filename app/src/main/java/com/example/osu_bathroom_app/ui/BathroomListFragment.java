@@ -1,4 +1,4 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +21,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.osu_bathroom_app.R;
+import com.example.osu_bathroom_app.adapters.RecyclerAdapter;
+import com.example.osu_bathroom_app.model.Bathroom;
+import com.example.osu_bathroom_app.view_model.BathroomListViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -132,25 +137,32 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
         });
 
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable()
-        {
-            public void run()
-            {
-                Log.i("Help", "You");
-                mViewModel.resetBathroom();
-            }
-        }, 600);
+    Log.i("reset","test");
+    Handler handler = new Handler();
+    handler.postDelayed(new Runnable() {
+        public void run() {
+            Log.i("Help", "You");
+            mViewModel.resetBathroom();
+        }
+    }, 600);
+        Log.i("Length",""+mViewModel.getBathrooms().getValue().size());
 
         return view;
     }
 
     private void initRecyclerView()
     {
+        //Log.i("Length",""+mViewModel.getBathrooms().getValue().size());
         adapter = new RecyclerAdapter(this.getContext(), mViewModel.getBathrooms().getValue(), this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(adapter);
+        adapter.setOnButtonClickListener(new RecyclerAdapter.OnButtonClickListener() {
+            @Override
+            public void onButtonClick(int position) {
+                mViewModel.removeBathroom(position);
+            }
+        });
     }
 
     private void infoFragment(String name, String address)
@@ -174,9 +186,13 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
     @Override
     public void onNoteClick(int position)
     {
+        if (getActivity().getSupportFragmentManager().findFragmentById(R.id.frame_layout) != null) {
+            Log.i("info", "testinfo: " + getActivity().getSupportFragmentManager().findFragmentById(R.id.frame_layout).toString());
+        }
         if (getActivity().getSupportFragmentManager().findFragmentById(R.id.frame_layout) == null) {
             Bathroom b = mViewModel.getBathrooms().getValue().get(position);
             Log.i("pos", "" + position);
+            Log.i("info","info");
             infoFragment(b.getName(), b.getAddress());
         }
     }

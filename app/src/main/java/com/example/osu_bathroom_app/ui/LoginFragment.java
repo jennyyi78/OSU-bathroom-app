@@ -1,4 +1,4 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.ui;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,66 +15,71 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.osu_bathroom_app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class RegisterFragment extends Fragment
-{
 
+public class LoginFragment extends Fragment
+{
+    private final String TAG = "LoginFragment";
     View view;
     private EditText usernameTextView, passwordTextView;
-    private Button registerBtn;
-    private Button backBtn;
+    private Button loginBtn, linkToRegisterBtn;
+
     private FirebaseAuth mAuth;
-    private final String TAG = "MainActivity";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_register, container, false);
 
+        view = inflater.inflate(R.layout.fragment_login, container, false);
         mAuth = FirebaseAuth.getInstance();
 
         // Initialize views
         usernameTextView = view.findViewById(R.id.username);
         passwordTextView = view.findViewById(R.id.password);
-        registerBtn = view.findViewById(R.id.registerButton);
-        backBtn = view.findViewById((R.id.backbtn));
-        registerBtn.setOnClickListener(new View.OnClickListener()
+        loginBtn = view.findViewById(R.id.loginButton);
+        linkToRegisterBtn = view.findViewById(R.id.linkToRegisterButton);
+
+        Log.i("Activities", "OnCreateView");
+
+        // Set on Click Listener on login button
+        loginBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                registerNewUser();
+                loginUserAccount();
             }
         });
 
-        backBtn.setOnClickListener(new View.OnClickListener()
+        // set listener on link to register button
+        linkToRegisterBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                replaceFragment(new LoginFragment());
+                Log.d("Button", "Test");
+                replaceFragment(new RegisterFragment());
             }
         });
-
-
+        Log.i(TAG, "OnCreateView");
         return view;
     }
 
-    private void registerNewUser()
+    private void loginUserAccount()
     {
 
         // Take the value of two edit texts in Strings
         String username, password;
         username = usernameTextView.getText().toString();
         password = passwordTextView.getText().toString();
-        Log.i("register", "" + password);
-        // Validations for input email and password
+
+        // validations for input email and password
         if (TextUtils.isEmpty(username)) {
             Toast.makeText(getActivity().getApplicationContext(),
                             "Please enter email!!",
@@ -82,6 +87,7 @@ public class RegisterFragment extends Fragment
                     .show();
             return;
         }
+
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(getActivity().getApplicationContext(),
                             "Please enter password!!",
@@ -90,34 +96,35 @@ public class RegisterFragment extends Fragment
             return;
         }
 
-        // create new user or register new user
-        mAuth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>()
-        {
+        // login existing user
+        mAuth.signInWithEmailAndPassword(username, password)
+                .addOnCompleteListener(
+                        new OnCompleteListener<AuthResult>()
+                        {
+                            @Override
+                            public void onComplete(
+                                    @NonNull Task<AuthResult> task)
+                            {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getActivity().getApplicationContext(),
+                                                    "Login successful!!",
+                                                    Toast.LENGTH_LONG)
+                                            .show();
 
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task)
-            {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getActivity().getApplicationContext(),
-                                    "Registration successful!",
-                                    Toast.LENGTH_LONG)
-                            .show();
+                                    // if sign-in is successful
+                                    // intent to home activity
+                                    replaceFragment(new HomePageFragment());
+                                } else {
 
+                                    // sign-in failed
+                                    Toast.makeText(getActivity().getApplicationContext(),
+                                                    "Login failed!!",
+                                                    Toast.LENGTH_LONG)
+                                            .show();
 
-                    replaceFragment(new LoginFragment());
-                } else {
-
-                    // Registration failed
-                    Toast.makeText(
-                                    getActivity().getApplicationContext(),
-                                    "Registration failed!!"
-                                            + " Please try again later",
-                                    Toast.LENGTH_LONG)
-                            .show();
-
-                }
-            }
-        });
+                                }
+                            }
+                        });
     }
 
     private void replaceFragment(Fragment fragment)

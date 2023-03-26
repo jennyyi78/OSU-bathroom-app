@@ -1,14 +1,20 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.adapters;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.osu_bathroom_app.R;
+import com.example.osu_bathroom_app.model.Bathroom;
+import com.example.osu_bathroom_app.model.Review;
 
 import java.util.List;
 
@@ -17,17 +23,36 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     Context context;
     List<Bathroom> list;
+    int viewType;
+    List<Review>   reviewList;
     public Boolean canClick = true;
 
     OnNoteListener mOnNoteListener;
+    OnButtonClickListener bListener;
+
+    public interface OnButtonClickListener
+    {
+        void onButtonClick(int position);
+    }
+    public void setOnButtonClickListener(OnButtonClickListener buttonListener)
+    {
+        bListener=buttonListener;
+    }
 
     public RecyclerAdapter(Context context, List<Bathroom> list, OnNoteListener onNoteListener)
     {
         this.context = context;
+        if(this.list!=null)
+        {
+            this.list.clear();
+        }
         this.list = list;
-
+        Log.i("adapter", ""+this.list.size());
         this.mOnNoteListener = onNoteListener;
+
     }
+
+
 
 
     @NonNull
@@ -35,13 +60,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         View v = LayoutInflater.from(context).inflate(R.layout.brlist, parent, false);
-        return new MyViewHolder(v, mOnNoteListener);
+
+        MyViewHolder v1= new MyViewHolder(v, mOnNoteListener,bListener);
+        //v1.setIsRecyclable(false);
+        Log.i("adapter", ""+this.list.size());
+        return v1;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position)
     {
-        Bathroom bathroom = list.get(position);
+        //Log.i("adapterhelp","help: "+list.size());
+        Bathroom bathroom =list.get(position);
         holder.name.setText(bathroom.getName());
         holder.address.setText(bathroom.getAddress());
     }
@@ -56,18 +86,32 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     {
 
         TextView name, address;
+        Button deleteBtn;
         OnNoteListener onNoteListener;
+        OnButtonClickListener bListener;
 
-        public MyViewHolder(@NonNull View itemView, OnNoteListener onNoteListener)
+        public MyViewHolder(@NonNull View itemView, OnNoteListener onNoteListener, OnButtonClickListener buttonClickListener)
         {
             super(itemView);
             name = itemView.findViewById(R.id.bathroom_name);
             address = itemView.findViewById(R.id.bathroom_address);
+            deleteBtn=itemView.findViewById(R.id.delete_button);
             this.onNoteListener = onNoteListener;
+            this.bListener=buttonClickListener;
+
+            deleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    bListener.onButtonClick(getAdapterPosition());
+                }
+            });
+
+
             itemView.setOnClickListener(this);
 
 
         }
+
 
         @Override
         public void onClick(View view)
@@ -79,6 +123,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         }
 
     }
+
+
+
 
     public interface OnNoteListener
     {

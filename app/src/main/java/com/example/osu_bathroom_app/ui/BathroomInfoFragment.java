@@ -1,4 +1,4 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.ui;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +12,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.osu_bathroom_app.R;
+import com.example.osu_bathroom_app.ui.AddReviewFragment;
+import com.example.osu_bathroom_app.ui.ReviewListFragment;
 
 
 public class BathroomInfoFragment extends DialogFragment implements View.OnTouchListener, GestureDetector.OnGestureListener
@@ -46,24 +51,62 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
         name.setText(String.valueOf(bundle.getString("Name")));
         address.setText(String.valueOf(bundle.getString("Address")));
 
+        review_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addReview();
+            }
+        });
+
+        info_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewReviews();
+            }
+        });
+
 
         return view;
     }
 
+    private void addReview()
+    {
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(this);
+        fragmentTransaction.commitNow();
+        AddReviewFragment frag = new AddReviewFragment();
+        fragmentTransaction.replace(R.id.fragment_container_view, frag);
+        fragmentTransaction.commit();
+    }
+
+    private void viewReviews()
+    {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(this);
+        fragmentTransaction.commitNow();
+        ReviewListFragment frag = new ReviewListFragment();
+        fragmentTransaction.replace(R.id.fragment_container_view, frag);
+        fragmentTransaction.commit();
+    }
 
     private void closeInfoFragment()
     {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment frag=fragmentManager.findFragmentById(R.id.frame_layout);
         fragmentTransaction.remove(this);
         fragmentTransaction.commit();
-       /* BathroomListFragment frag=BathroomListFragment.newInstance();
-        frag.view.findViewById(R.id.addbtn).setEnabled(true);*/
+        //fragmentManager.popBackStackImmediate(R.id.frame_layout,0);
+       //BathroomListFragment frag=BathroomListFragment.newInstance();
+        //frag.view.findViewById(R.id.addbtn).setEnabled(true);
         View v = view.getRootView();
-        v.findViewById(R.id.fragment_container_view).findViewById(R.id.addbtn).setEnabled(true);
+       v.findViewById(R.id.fragment_container_view).findViewById(R.id.addbtn).setEnabled(true);
         v.findViewById(R.id.fragment_container_view).findViewById(R.id.sort_button).setEnabled(true);
         v.findViewById(R.id.fragment_container_view).findViewById(R.id.spinner).setEnabled(true);
-        Log.i("views", "" + v);
+        //Log.i("views", "" + v);
 
     }
 

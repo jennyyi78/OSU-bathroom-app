@@ -1,9 +1,12 @@
-package com.example.osu_bathroom_app;
+package com.example.osu_bathroom_app.ui;
 
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.osu_bathroom_app.R;
+import com.example.osu_bathroom_app.ui.LoginFragment;
 
 public class MainActivity extends AppCompatActivity
 {
