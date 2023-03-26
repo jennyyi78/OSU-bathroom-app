@@ -1,4 +1,6 @@
+
 package com.example.osu_bathroom_app.view_model;
+
 
 import android.util.Log;
 

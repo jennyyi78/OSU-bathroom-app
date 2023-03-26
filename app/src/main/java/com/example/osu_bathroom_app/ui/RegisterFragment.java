@@ -1,4 +1,6 @@
+
 package com.example.osu_bathroom_app.ui;
+
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,7 +18,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.osu_bathroom_app.R;
+
 import com.example.osu_bathroom_app.ui.LoginFragment;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

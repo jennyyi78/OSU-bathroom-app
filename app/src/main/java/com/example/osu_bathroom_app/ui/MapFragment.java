@@ -1,4 +1,6 @@
+
 package com.example.osu_bathroom_app.ui;
+
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

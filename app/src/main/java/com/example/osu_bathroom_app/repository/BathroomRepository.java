@@ -144,12 +144,25 @@ public class BathroomRepository
                         @Override
                         public void run()
                         {
-                            Double d=(double)ds.child("rating").getValue();
 
+                            Double d;
+
+                            Object o=ds.child("rating").getValue();
+                            if(o instanceof Double)
+                            d=(Double)ds.child("rating").getValue();
+                            else
+                            {
+                                long l=(long)ds.child("rating").getValue();
+                                d=l*1.0;
+                            }
+
+                            //Object o=ds.child("rating").getValue();
+
+                            Log.i("teviews", ""+d);
                             //Log.i("reviews",""+(double)ds.child("rating").getValue());
                            Review r = new Review((long)ds.child("id").getValue(),d.floatValue(),(String)ds.child("review").getValue());
                             dataSetReviews.add(r);
-                            Log.i("Reviews", ""+r.getRating());
+
                         }
                     });
                 }

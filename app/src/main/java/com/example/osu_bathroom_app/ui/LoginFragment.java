@@ -1,4 +1,7 @@
+
 package com.example.osu_bathroom_app.ui;
+
+
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.osu_bathroom_app.main.HomePageFragment;
+import com.example.osu_bathroom_app.ui.RegisterFragment;
 import com.example.osu_bathroom_app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -129,11 +134,9 @@ public class LoginFragment extends Fragment
 
     private void replaceFragment(Fragment fragment)
     {
-
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container_view, fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
     }
 }
