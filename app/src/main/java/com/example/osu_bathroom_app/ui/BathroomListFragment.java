@@ -29,7 +29,8 @@ import com.example.osu_bathroom_app.R;
 import com.example.osu_bathroom_app.adapters.RecyclerAdapter;
 import com.example.osu_bathroom_app.model.Bathroom;
 import com.example.osu_bathroom_app.view_model.BathroomListViewModel;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 import java.util.ArrayList;
@@ -58,6 +59,8 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
     private BathroomListViewModel mViewModel;
     View view;
 
+    private FirebaseAuth mAuth;
+
     public static BathroomListFragment newInstance()
     {
         return new BathroomListFragment();
@@ -69,6 +72,8 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
     {
         view = inflater.inflate(R.layout.fragment_bathroom_list, container, false);
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
 
         recyclerView = view.findViewById(R.id.bathroom_list);
         ExecutorService service = Executors.newSingleThreadExecutor();
@@ -151,6 +156,11 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
         }
     }, 600);
         Log.i("Length",""+mViewModel.getBathrooms().getValue().size());
+
+        String email = user.getEmail();
+        if (!email.equals("admin@gmail.com")) {
+            add.setVisibility(View.GONE);
+        }
 
         return view;
     }
