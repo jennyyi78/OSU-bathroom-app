@@ -77,7 +77,7 @@ public class BathroomRepository
                        // @Override
                        // public void run()
                        // {
-                            Double d=(double)ds.child("avgRating").getValue();
+                            Double d=(double)ds.child("avgRating").getValue(Double.class);
                             Bathroom b = new Bathroom((long)ds.child("id").getValue(),(String) ds.child("name").getValue(), (String) ds.child("address").getValue(),d.floatValue(),(String) ds.child("information").getValue());
                             dataSet.add(b);
                        // }
