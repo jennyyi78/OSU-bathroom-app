@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 
 import com.example.osu_bathroom_app.R;
+import com.example.osu_bathroom_app.main.GlobalClass;
 import com.example.osu_bathroom_app.model.Review;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,11 +26,13 @@ public class AddReviewFragment extends Fragment {
     Button submit;
     EditText reviewText;
     RatingBar bar;
+    GlobalClass globalClass;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v;
         v= inflater.inflate(R.layout.fragment_add_review, container, false);
+        globalClass=(GlobalClass)getActivity().getApplicationContext();
        submit=v.findViewById(R.id.reviewBtn);
         reviewText=v.findViewById(R.id.reviewText);
         bar=v.findViewById(R.id.ratingBar);
@@ -47,7 +50,8 @@ public class AddReviewFragment extends Fragment {
     {
         float rating=bar.getRating();
         String review=reviewText.getText().toString();
-        Review r=new Review(2,rating,review);
+        long l=(long)globalClass.getUserId();
+        Review r=new Review(6,2,rating,review,l);
         ref.push().setValue(r);
         returnToBathroomList();
 

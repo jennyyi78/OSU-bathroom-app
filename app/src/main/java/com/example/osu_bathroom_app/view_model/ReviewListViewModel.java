@@ -13,16 +13,18 @@ import java.util.List;
 public class ReviewListViewModel extends ViewModel {
 
     private MutableLiveData<List<Review>> mReviews;
+
     private BathroomRepository mRepo;
 
 
-    public void init()
+    public void init(long id)
     {
         if (mReviews != null) {
             return;
         }
         mRepo = BathroomRepository.getInstance();
-        mReviews = mRepo.getReviews();
+        mReviews = mRepo.getReviews(id);
+
        // Log.i("Help", "Me");
 
     }
@@ -30,6 +32,8 @@ public class ReviewListViewModel extends ViewModel {
     {
         return mReviews;
     }
+
+
 
     public void resetReview()
     {

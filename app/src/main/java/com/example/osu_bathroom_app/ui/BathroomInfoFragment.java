@@ -31,6 +31,7 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
     View view;
     Button review_button;
     Button info_button;
+    long id;
 
     Button exit_button;
     final int min_Distance = 400;
@@ -49,7 +50,7 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
         Bundle bundle = getArguments();
         review_button = view.findViewById(R.id.review_button);
         info_button = view.findViewById(R.id.view_button);
-
+        id=bundle.getLong("Id");
         TextView name = (TextView) view.findViewById(R.id.name);
         TextView address = (TextView) view.findViewById(R.id.address);
         name.setText(String.valueOf(bundle.getString("Name")));
@@ -65,7 +66,7 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
         info_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewReviews();
+                viewReviews(id);
             }
         });
 
@@ -85,13 +86,19 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
         fragmentTransaction.commit();
     }
 
-    private void viewReviews()
+    private void viewReviews(long id)
     {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.remove(this);
         fragmentTransaction.commitNow();
         ReviewListFragment frag = new ReviewListFragment();
+
+
+        Bundle args = new Bundle();
+        Log.i("select","BRINFO: "+id);
+        args.putLong("Id", id);
+        frag.setArguments(args);
         fragmentTransaction.replace(R.id.fragment_container_view, frag);
         fragmentTransaction.commit();
     }

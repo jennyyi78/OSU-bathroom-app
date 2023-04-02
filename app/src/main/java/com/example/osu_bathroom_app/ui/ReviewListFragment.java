@@ -35,6 +35,7 @@ public class ReviewListFragment extends Fragment implements RecyclerAdapter.OnNo
 
     RecyclerView recyclerView;
     ReviewRecyclerAdapter adapter;
+    long id;
     ArrayList<Review> list;
     private ReviewListViewModel mViewModel;
     Button backBtn;
@@ -46,9 +47,12 @@ public class ReviewListFragment extends Fragment implements RecyclerAdapter.OnNo
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_review_list, container, false);
         ExecutorService service = Executors.newSingleThreadExecutor();
+        Bundle bundle = getArguments();
+        id=bundle.getLong("Id");
         recyclerView = view.findViewById(R.id.review_list);
         mViewModel=new ViewModelProvider(this).get(ReviewListViewModel.class);
-        mViewModel.init();
+        Log.i("select","RVlist: "+id);
+        mViewModel.init(id);
         backBtn=view.findViewById(R.id.button_back);
 
         mViewModel.getReviews().observe(this.getViewLifecycleOwner(), new Observer<List<Review>>()

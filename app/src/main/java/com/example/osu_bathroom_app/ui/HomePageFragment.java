@@ -1,6 +1,7 @@
 package com.example.osu_bathroom_app.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ public class HomePageFragment extends Fragment
     Button toBathroomListBtn;
     Button toFavorites;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -31,6 +34,7 @@ public class HomePageFragment extends Fragment
         toBathroomMap = view.findViewById(R.id.map_btn);
         toBathroomListBtn = view.findViewById(R.id.bathroom_list_btn);
         toFavorites = view.findViewById(R.id.favorites_btn);
+
 
         toFavorites.setEnabled(false); //TODO - implement the favorites page, for now it will be unusable
         toBathroomMap.setOnClickListener(new View.OnClickListener()
@@ -49,6 +53,8 @@ public class HomePageFragment extends Fragment
                 replaceFragment(new BathroomListFragment());
             }
         });
+
+
 
 
         return view;
