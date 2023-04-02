@@ -191,7 +191,7 @@ public class BathroomRepository {
 
                             Log.i("teviews", "" + d);
                             //Log.i("reviews",""+(double)ds.child("rating").getValue());
-                            Review r = new Review((long) ds.child("id").getValue(),(long) ds.child("bathroomid").getValue(), d.floatValue(), (String) ds.child("review").getValue(),(long)ds.child("userid").getValue());
+                            Review r = new Review((long) ds.child("id").getValue(),(long) ds.child("bathroomId").getValue(), d.floatValue(), (String) ds.child("review").getValue(),(long)ds.child("userId").getValue());
                             Log.i("select", "" + id);
                             Log.i("select", "br" + r.getBathroomId());
                             if(r.getBathroomId()==id) {
@@ -243,7 +243,7 @@ public class BathroomRepository {
 
                             Log.i("teviews", "" + d);
                             //Log.i("reviews",""+(double)ds.child("rating").getValue());
-                            Review r = new Review((long) ds.child("id").getValue(),(long) ds.child("bathroomid").getValue(), d.floatValue(), (String) ds.child("review").getValue(), (long)ds.child("userid").getValue());
+                            Review r = new Review((long) ds.child("id").getValue(),(long) ds.child("bathroomId").getValue(), d.floatValue(), (String) ds.child("review").getValue(), (long)ds.child("userId").getValue());
                             Log.i("iop",""+r.getId());
                             Log.i("iop","Hello me"+id);
                             if(r.getUserId()==id)

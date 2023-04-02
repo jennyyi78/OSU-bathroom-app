@@ -82,6 +82,9 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
         fragmentTransaction.remove(this);
         fragmentTransaction.commitNow();
         AddReviewFragment frag = new AddReviewFragment();
+        Bundle args = new Bundle();
+        args.putLong("Id",id);
+        frag.setArguments(args);
         fragmentTransaction.replace(R.id.fragment_container_view, frag);
         fragmentTransaction.commit();
     }
@@ -115,6 +118,7 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
         //frag.view.findViewById(R.id.addbtn).setEnabled(true);
         View v = view.getRootView();
        v.findViewById(R.id.fragment_container_view).findViewById(R.id.addbtn).setEnabled(true);
+        v.findViewById(R.id.fragment_container_view).findViewById(R.id.back_btn).setEnabled(true);
         v.findViewById(R.id.fragment_container_view).findViewById(R.id.sort_button).setEnabled(true);
         v.findViewById(R.id.fragment_container_view).findViewById(R.id.spinner).setEnabled(true);
         //Log.i("views", "" + v);
