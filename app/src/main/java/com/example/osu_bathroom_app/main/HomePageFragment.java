@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.osu_bathroom_app.R;
-import com.example.osu_bathroom_app.UserProfileFragment;
+import com.example.osu_bathroom_app.ui.UserProfileFragment;
 import com.example.osu_bathroom_app.ui.MapFragment;
 import com.example.osu_bathroom_app.ui.BathroomListFragment;
 import com.example.osu_bathroom_app.ui.MyReviewsFragment;

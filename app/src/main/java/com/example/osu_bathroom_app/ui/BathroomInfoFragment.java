@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -20,9 +21,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.osu_bathroom_app.R;
 
+import com.example.osu_bathroom_app.model.Review;
+import com.example.osu_bathroom_app.model.Favorite;
 import com.example.osu_bathroom_app.ui.AddReviewFragment;
 import com.example.osu_bathroom_app.ui.ReviewListFragment;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class BathroomInfoFragment extends DialogFragment implements View.OnTouchListener, GestureDetector.OnGestureListener
@@ -34,7 +40,13 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
     long id;
 
     Button exit_button;
+
+    Button add_favorite_button;
     final int min_Distance = 400;
+
+    DatabaseReference favoriteRef;
+
+    private FirebaseAuth mAuth;
 
     private GestureDetector detector;
 
@@ -48,9 +60,15 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
         view.setOnTouchListener(this);
         detector = new GestureDetector(this.getContext(), this);
         Bundle bundle = getArguments();
+
+        mAuth = FirebaseAuth.getInstance();
         review_button = view.findViewById(R.id.review_button);
         info_button = view.findViewById(R.id.view_button);
         id=bundle.getLong("Id");
+        add_favorite_button = view.findViewById(R.id.add_favorite_button);
+
+        favoriteRef = FirebaseDatabase.getInstance().getReference().child("Favorites");
+
         TextView name = (TextView) view.findViewById(R.id.name);
         TextView address = (TextView) view.findViewById(R.id.address);
         name.setText(String.valueOf(bundle.getString("Name")));
@@ -70,8 +88,31 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
             }
         });
 
+        add_favorite_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addFavorite();
+            }
+        });
+
+
+
 
         return view;
+    }
+
+    private void addFavorite() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        String email = user.getEmail();
+
+        Favorite f=new Favorite(2,email);
+        favoriteRef.push().setValue(f);
+        Toast.makeText(getActivity(), "Added Favorite", Toast.LENGTH_LONG).show();
+    }
+
+    private void removeFavorite() {
+        favoriteRef.child("2").removeValue();
+        Toast.makeText(getActivity(), "Removed Favorite", Toast.LENGTH_LONG).show();
     }
 
     private void addReview()
