@@ -18,10 +18,13 @@ import com.example.osu_bathroom_app.R;
 
 import com.example.osu_bathroom_app.model.Bathroom;
 import com.example.osu_bathroom_app.model.Review;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>
 {
@@ -34,6 +37,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     OnNoteListener mOnNoteListener;
     OnButtonClickListener bListener;
+
+    static FirebaseAuth mAuth;
 
     public interface OnButtonClickListener
     {
@@ -54,6 +59,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         this.list = list;
         Log.i("adapter", ""+this.list.size());
         this.mOnNoteListener = onNoteListener;
+        mAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -66,9 +72,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     {
         View v = LayoutInflater.from(context).inflate(R.layout.brlist, parent, false);
 
+
         MyViewHolder v1= new MyViewHolder(v, mOnNoteListener,bListener);
         //v1.setIsRecyclable(false);
         Log.i("adapter", ""+this.list.size());
+
         return v1;
     }
 
@@ -101,6 +109,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         OnNoteListener onNoteListener;
         OnButtonClickListener bListener;
 
+
+
         public MyViewHolder(@NonNull View itemView, OnNoteListener onNoteListener, OnButtonClickListener buttonClickListener)
         {
             super(itemView);
@@ -110,6 +120,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             this.onNoteListener = onNoteListener;
             this.bListener=buttonClickListener;
 
+
             deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -118,7 +129,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             });
 
 
+
             itemView.setOnClickListener(this);
+
+            FirebaseUser user = mAuth.getCurrentUser();
+
+            String email = user.getEmail();
+            if (!email.equals("admin@gmail.com")) {
+                deleteBtn.setVisibility(View.GONE);
+            }
+
 
 
         }
