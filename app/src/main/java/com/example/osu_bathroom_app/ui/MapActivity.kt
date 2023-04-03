@@ -22,7 +22,6 @@ import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
-import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 
 class MapActivity : AppCompatActivity() {
     private val TAG = "MapActivity"
@@ -53,11 +52,6 @@ class MapActivity : AppCompatActivity() {
                     }
                 }
         )
-//        mapView?.getMapboxMap()?.addOnMapClickListener { point ->
-//
-//            true
-//        }
-
     }
 
     private fun addAnnotationToMap(annotationLatitude: Double, annotationLongitude: Double) {
@@ -109,6 +103,7 @@ class MapActivity : AppCompatActivity() {
         }
     }
 
+    //adding the dialogfragment popup when you
     private fun selectLocation(pointAnn: PointAnnotation) {
         Log.i(TAG, "Point: " + pointAnn.point.coordinates().toString() +  pointAnn.isSelected.toString())
         Toast.makeText(getApplicationContext(), "you selected this map", Toast.LENGTH_SHORT).show()

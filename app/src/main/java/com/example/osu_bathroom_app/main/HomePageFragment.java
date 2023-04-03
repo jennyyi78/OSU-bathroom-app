@@ -30,7 +30,7 @@ public class HomePageFragment extends Fragment
     View view;
     DatabaseReference ref;
     private FirebaseAuth mAuth;
-    Button toBathroomMap, toBathroomListBtn, toFavorites, toUserProfileBtn, toMyReviews;
+    Button toBathroomMap, toBathroomListBtn, toUserProfileBtn, toMyReviews;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,9 +42,7 @@ public class HomePageFragment extends Fragment
         toUserProfileBtn = view.findViewById(R.id.user_profile_btn);
         toBathroomMap = view.findViewById(R.id.map_btn);
         toBathroomListBtn = view.findViewById(R.id.bathroom_list_btn);
-        toFavorites = view.findViewById(R.id.favorites_btn);
         toMyReviews=view.findViewById(R.id.my_reviews_btn);
-        toFavorites.setEnabled(false); //TODO - implement the favorites page, for now it will be unusable
         GlobalClass globalClass=(GlobalClass) getActivity().getApplicationContext();
         mAuth = FirebaseAuth.getInstance();
         String username=mAuth.getCurrentUser().getEmail();
