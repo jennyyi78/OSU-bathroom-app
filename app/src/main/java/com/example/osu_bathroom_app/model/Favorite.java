@@ -3,19 +3,19 @@ package com.example.osu_bathroom_app.model;
 public class Favorite {
 
     long bathroomId;
-    String user;
+    long userId;
 
-    public Favorite(long bathroomId, String user)
+    public Favorite(long bathroomId, long userId)
     {
         this.bathroomId=bathroomId;
-        this.user=user;
+        this.userId=userId;
     }
     public long getBathroomId()
     {
         return bathroomId;
     }
-    public String getUser()
+    public long getUserId()
     {
-        return user;
+        return userId;
     }
 }

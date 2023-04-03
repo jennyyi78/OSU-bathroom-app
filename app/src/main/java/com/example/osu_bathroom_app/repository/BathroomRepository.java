@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.osu_bathroom_app.model.Bathroom;
+import com.example.osu_bathroom_app.model.Favorite;
 import com.example.osu_bathroom_app.model.Review;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +27,9 @@ public class BathroomRepository {
     private final ArrayList<Review> dataSetReviews = new ArrayList<>();
     private final ArrayList<Review> dataSetMyReviews = new ArrayList<>();
 
+    private final ArrayList<Favorite> dataSetMyFavorites = new ArrayList<>();
+
+    private final ArrayList<Bathroom> dataSetMyBathrooms = new ArrayList<>();
     public static BathroomRepository getInstance() {
         if (instance == null) {
             instance = new BathroomRepository();
@@ -55,6 +59,14 @@ public class BathroomRepository {
         MutableLiveData<List<Review>> data = new MutableLiveData<>();
         data.setValue(dataSetMyReviews);
         Log.i("iop",data.toString());
+        return data;
+    }
+
+    public MutableLiveData<List<Bathroom>> getMyFavorites(long id) {
+        setMyFavorites(id);
+        MutableLiveData<List<Bathroom>> data = new MutableLiveData<>();
+        data.setValue(dataSetMyBathrooms);
+
         return data;
     }
 
@@ -93,6 +105,64 @@ public class BathroomRepository {
                     //Double d = (double) ds.child("avgRating").getValue();
                     Bathroom b = new Bathroom((long) ds.child("id").getValue(), (String) ds.child("name").getValue(), (String) ds.child("address").getValue(), d.floatValue(), (String) ds.child("information").getValue());
                     dataSet.add(b);
+                    // }
+                    // });
+                }
+
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+    private void setMyBathrooms() //where data is retrieved from firebase
+    {
+        Log.i("Keys", "Help");
+
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        ArrayList<String> list = new ArrayList<String>();
+        ref = FirebaseDatabase.getInstance().getReference().child("Bathrooms");
+
+        //dataSet.add()
+        ref.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.i("Keys", "Help");
+
+                dataSetMyBathrooms.clear();
+
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    //   service.execute(new Runnable()
+                    // {
+                    // @Override
+                    // public void run()
+                    // {
+                    Double d;
+
+                    Object o = ds.child("avgRating").getValue();
+                    if (o instanceof Double)
+                        d = (Double) ds.child("avgRating").getValue();
+                    else {
+                        long l = (long) ds.child("avgRating").getValue();
+                        d = l * 1.0;
+                    }
+                    //Double d = (double) ds.child("avgRating").getValue();
+                    Bathroom b = new Bathroom((long) ds.child("id").getValue(), (String) ds.child("name").getValue(), (String) ds.child("address").getValue(), d.floatValue(), (String) ds.child("information").getValue());
+
+                    for (Favorite f : dataSetMyFavorites) {
+                        if (f.getBathroomId() == b.getId()) {
+                            Log.d("bathfavs", f.toString());
+                            dataSetMyBathrooms.add(b);
+                        }
+                    }
                     // }
                     // });
                 }
@@ -256,6 +326,7 @@ public class BathroomRepository {
                         }
                     });
                 }
+
             }
 
             @Override
@@ -263,6 +334,44 @@ public class BathroomRepository {
 
             }
         });
+    }
+
+    private void setMyFavorites(long id) {
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        ref = FirebaseDatabase.getInstance().getReference().child("Favorites");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.i("Keys", "Help");
+                dataSetMyFavorites.clear();
+
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    service.execute(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Favorite f = new Favorite((long)ds.child("bathroomId").getValue(), (long)ds.child("userId").getValue());
+                            Log.d("favs", f.toString());
+                            if(f.getUserId()==id)
+                            {
+                                Log.d("favs2", f.toString());
+                                dataSetMyFavorites.add(f);
+                            }
+
+
+                        }
+                    });
+                }
+                setMyBathrooms();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 
 

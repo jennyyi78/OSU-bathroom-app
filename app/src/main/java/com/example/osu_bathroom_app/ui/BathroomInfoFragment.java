@@ -21,14 +21,21 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.osu_bathroom_app.R;
 
+import com.example.osu_bathroom_app.main.GlobalClass;
 import com.example.osu_bathroom_app.model.Review;
 import com.example.osu_bathroom_app.model.Favorite;
 import com.example.osu_bathroom_app.ui.AddReviewFragment;
 import com.example.osu_bathroom_app.ui.ReviewListFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class BathroomInfoFragment extends DialogFragment implements View.OnTouchListener, GestureDetector.OnGestureListener
@@ -50,6 +57,8 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
 
     private GestureDetector detector;
 
+    GlobalClass globalClass;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +69,7 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
         view.setOnTouchListener(this);
         detector = new GestureDetector(this.getContext(), this);
         Bundle bundle = getArguments();
-
+        globalClass=(GlobalClass)getActivity().getApplicationContext();
         mAuth = FirebaseAuth.getInstance();
         review_button = view.findViewById(R.id.review_button);
         info_button = view.findViewById(R.id.view_button);
@@ -96,24 +105,85 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
         });
 
 
+        Query q = favoriteRef.orderByChild("bathroomId").equalTo(id);
+
+        q.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    long userId = snapshot.child("userId").getValue(Long.class);
+                    if (userId == globalClass.getUserId()) {
+                        add_favorite_button.setText("Remove from Favorites");
+
+                        add_favorite_button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                removeFavorite();
+                            }
+                        });
+                    } else {
+                        add_favorite_button.setText("Add to Favorites");
+                        add_favorite_button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                addFavorite();
+                            }
+                        });
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle any errors that occur
+            }
+        });
+
+
+
 
 
         return view;
     }
 
     private void addFavorite() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        String email = user.getEmail();
 
-        Favorite f=new Favorite(2,email);
+        Favorite f=new Favorite(this.id, globalClass.getUserId());
         favoriteRef.push().setValue(f);
         Toast.makeText(getActivity(), "Added Favorite", Toast.LENGTH_LONG).show();
     }
 
     private void removeFavorite() {
-        favoriteRef.child("2").removeValue();
+        Query q = favoriteRef.orderByChild("userId").equalTo(globalClass.getUserId());
+
+        q.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    long bathroomId = snapshot.child("bathroomId").getValue(Long.class);
+                    if (bathroomId == id) {
+                        snapshot.getRef().removeValue();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("TAG", "onCancelled: " + databaseError);
+            }
+        });
         Toast.makeText(getActivity(), "Removed Favorite", Toast.LENGTH_LONG).show();
+        add_favorite_button.setText("Add to Favorites");
+        add_favorite_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addFavorite();
+            }
+        });
     }
+
 
     private void addReview()
     {

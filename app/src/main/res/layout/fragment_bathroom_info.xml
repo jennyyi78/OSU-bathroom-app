@@ -113,7 +113,8 @@
                 android:id="@+id/add_favorite_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="120dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
                 android:text="Add to Favorites"
 
                 app:layout_constraintBottom_toBottomOf="parent"
