@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class BathroomRepository {
-
+    //TODO - gw use this for the locations on the map page
     private static BathroomRepository instance;
     DatabaseReference ref;
     private final ArrayList<Bathroom> dataSet = new ArrayList<>();

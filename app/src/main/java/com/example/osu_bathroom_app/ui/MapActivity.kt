@@ -13,6 +13,7 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.example.osu_bathroom_app.R
+import com.example.osu_bathroom_app.model.Bathroom
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
@@ -28,8 +29,11 @@ class MapActivity : AppCompatActivity() {
     private var mapView: MapView? = null
     private lateinit var mapboxMap: MapboxMap
     private lateinit var pointAnnotationManager: PointAnnotationManager
-    private val viewAnnotationViews = mutableListOf<View>()
-
+    private val viewAnnotationViews = listOf(
+            Bathroom(1, "Caldwell Lab", "2024 Neil Ave, Columbus, OH 43210", 1f, "place for ece"),
+            Bathroom(2, "Dreese Lab", "2015 Neil Ave, Columbus, OH 43210", 3f, "tall building with a view"),
+            Bathroom(3, "Bolz Hall", "2036 Neil Ave, Columbus, OH 43210", 2.6f, "calc 2 happens here"),
+            )
     //TODO - would use geocoding to connect firebase data to the mapview in this activity
     private val pointLocations = listOf(Pair(40.002370, -83.015170), Pair(40.0016851, -83.0159304), Pair(40.003152, -83.0148552))
 
