@@ -10,6 +10,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        jcenter() //needed for mapboxsdk:mapbox-android-accounts
         maven {
             url 'https://api.mapbox.com/downloads/v2/releases/maven'
             authentication {
@@ -25,8 +26,6 @@ dependencyResolutionManagement {
             }
         }
 
-        google()
-        mavenCentral()
     }
 }
 rootProject.name = "OSU-Bathroom-App"

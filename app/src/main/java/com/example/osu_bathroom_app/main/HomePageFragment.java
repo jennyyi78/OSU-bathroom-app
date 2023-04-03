@@ -1,5 +1,6 @@
 package com.example.osu_bathroom_app.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.osu_bathroom_app.R;
+import com.example.osu_bathroom_app.ui.MapActivity;
 import com.example.osu_bathroom_app.ui.UserProfileFragment;
-import com.example.osu_bathroom_app.ui.MapFragment;
 import com.example.osu_bathroom_app.ui.BathroomListFragment;
 import com.example.osu_bathroom_app.ui.MyReviewsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +30,7 @@ public class HomePageFragment extends Fragment
     View view;
     DatabaseReference ref;
     private FirebaseAuth mAuth;
-    Button toBathroomMap, toBathroomListBtn, toFavorites, toUserProfileBtn, toMyReviews;
+    Button toBathroomMap, toBathroomListBtn, toUserProfileBtn, toMyReviews;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,9 +42,7 @@ public class HomePageFragment extends Fragment
         toUserProfileBtn = view.findViewById(R.id.user_profile_btn);
         toBathroomMap = view.findViewById(R.id.map_btn);
         toBathroomListBtn = view.findViewById(R.id.bathroom_list_btn);
-        toFavorites = view.findViewById(R.id.favorites_btn);
         toMyReviews=view.findViewById(R.id.my_reviews_btn);
-        toFavorites.setEnabled(false); //TODO - implement the favorites page, for now it will be unusable
         GlobalClass globalClass=(GlobalClass) getActivity().getApplicationContext();
         mAuth = FirebaseAuth.getInstance();
         String username=mAuth.getCurrentUser().getEmail();
@@ -68,7 +67,9 @@ public class HomePageFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-                replaceFragment(new MapFragment());
+                //replaceFragment(new MapFragment());
+                Intent mapActivityIntent = new Intent(getActivity(), MapActivity.class);
+                startActivity(mapActivityIntent);
             }
         });
         toBathroomListBtn.setOnClickListener(new View.OnClickListener()
