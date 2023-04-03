@@ -11,6 +11,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.osu_bathroom_app.R;
+import com.example.osu_bathroom_app.main.GlobalClass;
 import com.example.osu_bathroom_app.main.HomePageFragment;
 
 import com.example.osu_bathroom_app.ui.LoginFragment;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        GlobalClass globalClass=(GlobalClass) getApplicationContext();
 
         //  FirebaseDatabase database = FirebaseDatabase.getInstance();
         //DatabaseReference myRef = database.getReference("message");

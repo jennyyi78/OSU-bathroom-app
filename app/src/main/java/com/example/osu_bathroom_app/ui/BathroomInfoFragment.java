@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -20,9 +21,21 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.osu_bathroom_app.R;
 
+import com.example.osu_bathroom_app.main.GlobalClass;
+import com.example.osu_bathroom_app.model.Review;
+import com.example.osu_bathroom_app.model.Favorite;
 import com.example.osu_bathroom_app.ui.AddReviewFragment;
 import com.example.osu_bathroom_app.ui.ReviewListFragment;
-
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class BathroomInfoFragment extends DialogFragment implements View.OnTouchListener, GestureDetector.OnGestureListener
@@ -31,11 +44,20 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
     View view;
     Button review_button;
     Button info_button;
+    long id;
 
     Button exit_button;
+
+    Button add_favorite_button;
     final int min_Distance = 400;
 
+    DatabaseReference favoriteRef;
+
+    private FirebaseAuth mAuth;
+
     private GestureDetector detector;
+
+    GlobalClass globalClass;
 
 
     @Override
@@ -47,8 +69,14 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
         view.setOnTouchListener(this);
         detector = new GestureDetector(this.getContext(), this);
         Bundle bundle = getArguments();
+        globalClass=(GlobalClass)getActivity().getApplicationContext();
+        mAuth = FirebaseAuth.getInstance();
         review_button = view.findViewById(R.id.review_button);
         info_button = view.findViewById(R.id.view_button);
+        id=bundle.getLong("Id");
+        add_favorite_button = view.findViewById(R.id.add_favorite_button);
+
+        favoriteRef = FirebaseDatabase.getInstance().getReference().child("Favorites");
 
         TextView name = (TextView) view.findViewById(R.id.name);
         TextView address = (TextView) view.findViewById(R.id.address);
@@ -65,13 +93,97 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
         info_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewReviews();
+                viewReviews(id);
+            }
+        });
+
+        add_favorite_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addFavorite();
             }
         });
 
 
+        Query q = favoriteRef.orderByChild("bathroomId").equalTo(id);
+
+        q.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    long userId = snapshot.child("userId").getValue(Long.class);
+                    if (userId == globalClass.getUserId()) {
+                        add_favorite_button.setText("Remove from Favorites");
+
+                        add_favorite_button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                removeFavorite();
+                            }
+                        });
+                    } else {
+                        add_favorite_button.setText("Add to Favorites");
+                        add_favorite_button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                addFavorite();
+                            }
+                        });
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle any errors that occur
+            }
+        });
+
+
+
+
+
         return view;
     }
+
+    private void addFavorite() {
+
+        Favorite f=new Favorite(this.id, globalClass.getUserId());
+        favoriteRef.push().setValue(f);
+        Toast.makeText(getActivity(), "Added Favorite", Toast.LENGTH_LONG).show();
+    }
+
+    private void removeFavorite() {
+        Query q = favoriteRef.orderByChild("userId").equalTo(globalClass.getUserId());
+
+        q.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    long bathroomId = snapshot.child("bathroomId").getValue(Long.class);
+                    if (bathroomId == id) {
+                        snapshot.getRef().removeValue();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("TAG", "onCancelled: " + databaseError);
+            }
+        });
+        Toast.makeText(getActivity(), "Removed Favorite", Toast.LENGTH_LONG).show();
+        add_favorite_button.setText("Add to Favorites");
+        add_favorite_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addFavorite();
+            }
+        });
+    }
+
 
     private void addReview()
     {
@@ -81,17 +193,26 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
         fragmentTransaction.remove(this);
         fragmentTransaction.commitNow();
         AddReviewFragment frag = new AddReviewFragment();
+        Bundle args = new Bundle();
+        args.putLong("Id",id);
+        frag.setArguments(args);
         fragmentTransaction.replace(R.id.fragment_container_view, frag);
         fragmentTransaction.commit();
     }
 
-    private void viewReviews()
+    private void viewReviews(long id)
     {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.remove(this);
         fragmentTransaction.commitNow();
         ReviewListFragment frag = new ReviewListFragment();
+
+
+        Bundle args = new Bundle();
+        Log.i("select","BRINFO: "+id);
+        args.putLong("Id", id);
+        frag.setArguments(args);
         fragmentTransaction.replace(R.id.fragment_container_view, frag);
         fragmentTransaction.commit();
     }
@@ -108,6 +229,7 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
         //frag.view.findViewById(R.id.addbtn).setEnabled(true);
         View v = view.getRootView();
        v.findViewById(R.id.fragment_container_view).findViewById(R.id.addbtn).setEnabled(true);
+        v.findViewById(R.id.fragment_container_view).findViewById(R.id.back_btn).setEnabled(true);
         v.findViewById(R.id.fragment_container_view).findViewById(R.id.sort_button).setEnabled(true);
         v.findViewById(R.id.fragment_container_view).findViewById(R.id.spinner).setEnabled(true);
         //Log.i("views", "" + v);

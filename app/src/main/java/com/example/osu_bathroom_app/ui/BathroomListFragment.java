@@ -4,6 +4,8 @@ package com.example.osu_bathroom_app.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 
@@ -27,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.osu_bathroom_app.R;
 
 import com.example.osu_bathroom_app.adapters.RecyclerAdapter;
+import com.example.osu_bathroom_app.main.HomePageFragment;
 import com.example.osu_bathroom_app.model.Bathroom;
 import com.example.osu_bathroom_app.view_model.BathroomListViewModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -46,12 +51,14 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
 
     RecyclerView recyclerView;
     RecyclerAdapter adapter;
+    EditText searchBar;
     Spinner spinner;
     Button add;
+    Button back;
     Button sort;
     static Boolean canClick = true;
     Boolean loop = true;
-
+    long bathroomId=0;
     ArrayList<Bathroom> list;
     String sortMethod;
 
@@ -78,6 +85,8 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
         recyclerView = view.findViewById(R.id.bathroom_list);
         ExecutorService service = Executors.newSingleThreadExecutor();
         add = view.findViewById(R.id.addbtn);
+        back=view.findViewById(R.id.back_btn);
+        searchBar=view.findViewById(R.id.search_bar);
         mViewModel = new ViewModelProvider(this).get(BathroomListViewModel.class);
         layout = view.findViewById(R.id.frame_layout);
         spinner = view.findViewById(R.id.spinner);
@@ -105,7 +114,22 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
             canClick=true;
 
         }*/
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
         add.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -129,7 +153,12 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
                 });
             }
         });
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                backToList();
+            }
+        });
         sort.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -164,7 +193,19 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
 
         return view;
     }
+    private void filter(String s)
+    {
+        Log.i("Search",s);
+        ArrayList<Bathroom> br=new ArrayList<>();
+        for (Bathroom b:mViewModel.getBathrooms().getValue()) {
+            if(b.getName().toLowerCase().contains(s)|| b.getAddress().toLowerCase().contains(s))
+            {
+                br.add(b);
+            }
 
+        }
+        adapter.filterList(br);
+    }
     private void initRecyclerView()
     {
         //Log.i("Length",""+mViewModel.getBathrooms().getValue().size());
@@ -180,7 +221,7 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
         });
     }
 
-    private void infoFragment(String name, String address)
+    private void infoFragment(String name, String address, long id)
     {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -188,12 +229,15 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
         Bundle args = new Bundle();
         args.putString("Name", name);
         args.putString("Address", address);
+        args.putLong("Id",id);
 
+        Log.i("select","BRLIST: "+id);
         frag.setArguments(args);
         fragmentTransaction.replace(R.id.frame_layout, frag);
 
         fragmentTransaction.commit();
         add.setEnabled(false);
+        back.setEnabled(false);
         sort.setEnabled(false);
         spinner.setEnabled(false);
     }
@@ -208,10 +252,17 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
             Bathroom b = mViewModel.getBathrooms().getValue().get(position);
             Log.i("pos", "" + position);
             Log.i("info","info");
-            infoFragment(b.getName(), b.getAddress());
+            infoFragment(b.getName(), b.getAddress(),b.getId());
         }
     }
-
+    private void backToList()
+    {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        HomePageFragment frag = new HomePageFragment();
+        fragmentTransaction.replace(R.id.fragment_container_view, frag);
+        fragmentTransaction.commit();
+    }
     public void sortBathrooms(int method)
     {
         if (method == 0) {

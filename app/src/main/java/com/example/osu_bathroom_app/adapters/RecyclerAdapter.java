@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -88,10 +89,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.address.setText(bathroom.getAddress());
     }
 
+
     @Override
     public int getItemCount()
     {
         return list.size();
+    }
+    public void filterList(ArrayList<Bathroom> br)
+    {
+        list=br;
+        notifyDataSetChanged();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -152,4 +159,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     {
         void onNoteClick(int position);
     }
+
+
 }
