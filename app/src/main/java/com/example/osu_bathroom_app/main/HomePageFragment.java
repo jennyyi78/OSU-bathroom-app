@@ -1,5 +1,6 @@
 package com.example.osu_bathroom_app.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +10,11 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+
 import com.example.osu_bathroom_app.R;
 import com.example.osu_bathroom_app.UserProfileFragment;
-import com.example.osu_bathroom_app.ui.MapFragment;
 import com.example.osu_bathroom_app.ui.BathroomListFragment;
+import com.example.osu_bathroom_app.ui.MapActivity;
 
 
 public class HomePageFragment extends Fragment
@@ -44,7 +46,9 @@ public class HomePageFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-                replaceFragment(new MapFragment());
+                //replaceFragment(new MapFragment());
+                Intent mapActivityIntent = new Intent(getActivity(), MapActivity.class);
+                startActivity(mapActivityIntent);
             }
         });
         toBathroomListBtn.setOnClickListener(new View.OnClickListener()
