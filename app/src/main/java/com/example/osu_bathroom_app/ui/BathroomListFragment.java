@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.osu_bathroom_app.R;
 
 import com.example.osu_bathroom_app.adapters.RecyclerAdapter;
+import com.example.osu_bathroom_app.main.GlobalClass;
 import com.example.osu_bathroom_app.main.HomePageFragment;
 import com.example.osu_bathroom_app.model.Bathroom;
 import com.example.osu_bathroom_app.view_model.BathroomListViewModel;
@@ -61,6 +62,7 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
     long bathroomId=0;
     ArrayList<Bathroom> list;
     String sortMethod;
+    GlobalClass globalClass;
 
     FrameLayout layout;
     private BathroomListViewModel mViewModel;
@@ -81,7 +83,7 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-
+        globalClass=(GlobalClass)getActivity().getApplicationContext();
         recyclerView = view.findViewById(R.id.bathroom_list);
         ExecutorService service = Executors.newSingleThreadExecutor();
         add = view.findViewById(R.id.addbtn);
@@ -223,6 +225,7 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
 
     private void infoFragment(String name, String address, long id)
     {
+        globalClass.setCurrentPage(0);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         BathroomInfoFragment frag = new BathroomInfoFragment();

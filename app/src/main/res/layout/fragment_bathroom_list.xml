@@ -7,16 +7,17 @@
     android:id="@+id/list_container"
     tools:context=".ui.BathroomListFragment">
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bathroom_list"
         android:layout_width="414dp"
-        android:layout_height="619dp"
+        android:layout_height="568dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.607" />
 
     <Button
         android:id="@+id/addbtn"
@@ -28,7 +29,7 @@
         app:layout_constraintHorizontal_bias="0.12"
         app:layout_constraintStart_toStartOf="@+id/bathroom_list"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.942" />
+        app:layout_constraintVertical_bias="0.976" />
 
 
     <Button
@@ -41,7 +42,7 @@
         app:layout_constraintHorizontal_bias="0.863"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.942" />
+        app:layout_constraintVertical_bias="0.976" />
 
     <FrameLayout
         android:id="@+id/frame_layout"

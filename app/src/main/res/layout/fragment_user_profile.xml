@@ -1,73 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.UserProfileFragment">
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical">
+    <Button
+        android:id="@+id/linkToHomePageButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.986" />
 
-       <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="200dp">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favorites_list"
+        android:layout_width="414dp"
+        android:layout_height="450dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.797">
 
-           <TextView
-               android:id="@+id/welcome"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_centerInParent="true"
-               android:text="Loading..."
-               android:textAppearance="@style/TextAppearance.AppCompat.Headline"></TextView>
-       </RelativeLayout>
-       <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="match_parent" >
+    </androidx.recyclerview.widget.RecyclerView>
 
-           <TextView
-               android:id="@+id/textView_favorites"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_centerInParent="true"
-               android:hint="Favorites"
-               android:textSize="18dp"></TextView>
+    <FrameLayout
+        android:id="@+id/frame_layout_1"
+        android:layout_width="410dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/favorites_list"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/favorites_list"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
-       </RelativeLayout>
+    </FrameLayout>
 
-       <androidx.recyclerview.widget.RecyclerView
-           android:id="@+id/favorites_list"
-           android:layout_width="414dp"
-           android:layout_height="200dp"
-           app:layout_constraintBottom_toBottomOf="parent"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintHorizontal_bias="0.0"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toTopOf="parent"
-           app:layout_constraintVertical_bias="1.0">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-       </androidx.recyclerview.widget.RecyclerView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
 
-       <FrameLayout
-           android:id="@+id/frame_layout"
-           android:layout_width="410dp"
-           android:layout_height="300dp"
-           app:layout_constraintBottom_toBottomOf="parent"
-           app:layout_constraintEnd_toEndOf="@+id/bathroom_list"
-           app:layout_constraintHorizontal_bias="0.0"
-           app:layout_constraintStart_toStartOf="@+id/bathroom_list"
-           app:layout_constraintTop_toTopOf="parent"
-           app:layout_constraintVertical_bias="1.0">
+            <TextView
+                android:id="@+id/welcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Loading..."
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"></TextView>
+        </RelativeLayout>
 
-       </FrameLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-       <Button
-           android:id="@+id/linkToHomePageButton"
-           android:layout_width="100dp"
-           android:layout_height="wrap_content"
-           android:text="Back" />
-   </LinearLayout>
+            <TextView
+                android:id="@+id/textView_favorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:hint="Favorites"
+                android:textSize="18dp"></TextView>
 
-</ScrollView>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

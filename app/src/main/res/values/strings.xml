@@ -7,4 +7,5 @@
         <item>A-Z</item>
         <item>Z-A</item>
     </string-array>
+    <string name="ok">[X]</string>
 </resources>
