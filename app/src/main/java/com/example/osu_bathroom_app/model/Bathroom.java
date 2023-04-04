@@ -12,25 +12,33 @@ public class Bathroom
 
     public Bathroom(long id, String name, String address, float rating, String info)
     {
-        this.id=id;
+        this.id = id;
         this.name = name;
         this.address = address;
-        this.avgRating=rating;
-        this.info=info;
+        this.avgRating = rating;
+        this.info = info;
     }
 
-    public long getId(){return this.id;}
+    public long getId()
+    {
+        return this.id;
+    }
 
     public String getInfo()
     {
         return this.info;
     }
 
-    public float getAvgRating(){return this.avgRating;}
+    public float getAvgRating()
+    {
+        return this.avgRating;
+    }
+
     public void setAvgRating(float rating)
     {
-        this.avgRating=rating;
+        this.avgRating = rating;
     }
+
     public String getName()
     {
         return name;
