@@ -1,5 +1,6 @@
 package com.example.osu_bathroom_app.ui;
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -7,11 +8,11 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.location.Address
 import android.location.Geocoder
-import android.location.Geocoder.GeocodeListener
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.bundleOf
@@ -29,6 +30,7 @@ import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
+import java.util.*
 
 class MapActivity : AppCompatActivity() {
     private val TAG = "MapActivity"
@@ -39,23 +41,19 @@ class MapActivity : AppCompatActivity() {
     private val lowerLeftLongitude: Double = -83.04294296594549
     private val upperRightLatitude: Double = 40.01008264838917
     private val upperRightLongitude: Double = -83.00504871849562
+    private lateinit var geocodeAddress: Address
+
+//    val geocodeListener = @RequiresApi(33) object : Geocoder.GeocodeListener {
+//        override fun onGeocode(addresses: MutableList<Address>) {
+//            geocodeAddress = addresses.first()
+//        }
+//    }
 
     private val bathroomLocations = mapOf(
             Bathroom(1, "Caldwell Lab", "2024 Neil Ave, Columbus, OH 43210", 1f, "place for ece") to Pair(40.002370, -83.015170),
             Bathroom(2, "Dreese Lab", "2015 Neil Ave, Columbus, OH 43210", 3f, "tall building with a view") to Pair(40.0016851, -83.0159304),
             Bathroom(3, "Bolz Hall", "2036 Neil Ave, Columbus, OH 43210", 2.6f, "calc 2 happens here") to Pair(40.003152, -83.0148552),
     )
-
-//    private val bathroomLocations = listOf(
-//            Bathroom(1, "Caldwell Lab", "2024 Neil Ave, Columbus, OH 43210", 1f, "place for ece"),
-//            Bathroom(2, "Dreese Lab", "2015 Neil Ave, Columbus, OH 43210", 3f, "tall building with a view"),
-//            Bathroom(3, "Bolz Hall", "2036 Neil Ave, Columbus, OH 43210", 2.6f, "calc 2 happens here"),
-//    )
-
-    //private val addressMapping = emptyMap<Int, Address>()
-
-    //TODO - would use geocoding to connect firebase data to the mapview in this activity
-    private val pointLocations = listOf(Pair(40.002370, -83.015170), Pair(40.0016851, -83.0159304), Pair(40.003152, -83.0148552))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +69,7 @@ class MapActivity : AppCompatActivity() {
                         pointAnnotationManager = annotationApi?.createPointAnnotationManager(mapView!!)!!
                         for (b in bathroomLocations) {
                             val coordinates = b.value
+                            //obtainCoordinates(b.key.address)
                             addAnnotationToMap(coordinates.first, coordinates.second)
                         }
                     }
@@ -132,8 +131,7 @@ class MapActivity : AppCompatActivity() {
         for (b in bathroomLocations) {
             var bathroomCoords = b.value
             //Log.i(TAG, "Annotation Coordinates: " + coordinates.toString() + "Bath Coords: " + bathroomCoords.toString() )
-            if(bathroomCoords.second == coordinates.first() && bathroomCoords.first == coordinates.last())
-            {
+            if (bathroomCoords.second == coordinates.first() && bathroomCoords.first == coordinates.last()) {
                 showDialog(b.key)
             }
         }
@@ -151,7 +149,7 @@ class MapActivity : AppCompatActivity() {
         }
         ft.addToBackStack(null)
 
-        var args : Bundle = bundleOf(
+        var args: Bundle = bundleOf(
                 "title" to bathroom.name,
                 "address" to bathroom.address,
                 "avgRating" to bathroom.avgRating.toString(),
@@ -163,5 +161,14 @@ class MapActivity : AppCompatActivity() {
     }
 
 
+//    private fun obtainCoordinates(address: String) {
+//        val geocode = Geocoder(this, Locale.getDefault())
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            geocode.getFromLocationName(address, 1, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, geocodeListener)
+//            Log.i(TAG, String.format("From address: %s ---> (%f, %f", address, geocodeAddress.latitude, geocodeAddress.longitude))
+//        }
+//
+//
+//    }
 
 }
