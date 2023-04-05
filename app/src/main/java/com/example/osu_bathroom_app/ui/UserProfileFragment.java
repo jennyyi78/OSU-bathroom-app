@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,8 +46,10 @@ public class UserProfileFragment extends Fragment implements RecyclerAdapter.OnN
     private Button linkToHomePageBtn;
     View view;
     private FirebaseAuth mAuth;
+    GlobalClass globalClass;
 
     String sortMethod;
+
 
     DatabaseReference ref;
 
@@ -63,6 +66,7 @@ public class UserProfileFragment extends Fragment implements RecyclerAdapter.OnN
         ref = FirebaseDatabase.getInstance().getReference().child("Favorites");
         GlobalClass globalClass=(GlobalClass) getActivity().getApplicationContext();
         mViewModel.init(globalClass.getUserId());
+
 
         mViewModel.getMyFavorites().observe(this.getViewLifecycleOwner(), new Observer<List<Bathroom>>()
         {
@@ -86,6 +90,13 @@ public class UserProfileFragment extends Fragment implements RecyclerAdapter.OnN
                 getParentFragmentManager().popBackStack();
             }
         });
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                Log.i("Help", "You");
+                mViewModel.resetBathroom();
+            }
+        }, 600);
 
         if (user == null) {
             Toast.makeText(getActivity(), "User details not available", Toast.LENGTH_LONG).show();
@@ -113,6 +124,8 @@ public class UserProfileFragment extends Fragment implements RecyclerAdapter.OnN
 
     private void infoFragment(String name, String address, long id)
     {
+        globalClass=(GlobalClass) getActivity().getApplicationContext();
+        globalClass.setCurrentPage(1);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         BathroomInfoFragment frag = new BathroomInfoFragment();
@@ -123,9 +136,10 @@ public class UserProfileFragment extends Fragment implements RecyclerAdapter.OnN
 
         Log.i("select","BRLIST: "+id);
         frag.setArguments(args);
-        fragmentTransaction.replace(R.id.frame_layout, frag);
+        fragmentTransaction.replace(R.id.frame_layout_1, frag);
 
         fragmentTransaction.commit();
+        linkToHomePageBtn.setEnabled(false);
 
     }
 

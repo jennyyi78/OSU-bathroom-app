@@ -219,19 +219,33 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
 
     private void closeInfoFragment()
     {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment frag=fragmentManager.findFragmentById(R.id.frame_layout);
-        fragmentTransaction.remove(this);
-        fragmentTransaction.commit();
-        //fragmentManager.popBackStackImmediate(R.id.frame_layout,0);
-       //BathroomListFragment frag=BathroomListFragment.newInstance();
-        //frag.view.findViewById(R.id.addbtn).setEnabled(true);
-        View v = view.getRootView();
-       v.findViewById(R.id.fragment_container_view).findViewById(R.id.addbtn).setEnabled(true);
-        v.findViewById(R.id.fragment_container_view).findViewById(R.id.back_btn).setEnabled(true);
-        v.findViewById(R.id.fragment_container_view).findViewById(R.id.sort_button).setEnabled(true);
-        v.findViewById(R.id.fragment_container_view).findViewById(R.id.spinner).setEnabled(true);
+        if(globalClass.getCurrentPage()==0) {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Fragment frag = fragmentManager.findFragmentById(R.id.frame_layout);
+            fragmentTransaction.remove(this);
+            fragmentTransaction.commit();
+            //fragmentManager.popBackStackImmediate(R.id.frame_layout,0);
+            //BathroomListFragment frag=BathroomListFragment.newInstance();
+            //frag.view.findViewById(R.id.addbtn).setEnabled(true);
+            View v = view.getRootView();
+            v.findViewById(R.id.fragment_container_view).findViewById(R.id.addbtn).setEnabled(true);
+            v.findViewById(R.id.fragment_container_view).findViewById(R.id.back_btn).setEnabled(true);
+            v.findViewById(R.id.fragment_container_view).findViewById(R.id.sort_button).setEnabled(true);
+            v.findViewById(R.id.fragment_container_view).findViewById(R.id.spinner).setEnabled(true);
+        }
+        else
+        {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Fragment frag = fragmentManager.findFragmentById(R.id.frame_layout_1);
+            fragmentTransaction.remove(this);
+            fragmentTransaction.commit();
+
+            View v = view.getRootView();
+            v.findViewById(R.id.fragment_container_view).findViewById(R.id.linkToHomePageButton).setEnabled(true);
+
+        }
         //Log.i("views", "" + v);
 
     }

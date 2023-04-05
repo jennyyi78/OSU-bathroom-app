@@ -1,6 +1,5 @@
 package com.example.osu_bathroom_app.ui;
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
@@ -12,7 +11,8 @@ import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
+import android.view.View
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +23,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.osu_bathroom_app.R
 import com.example.osu_bathroom_app.model.Bathroom
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
@@ -45,7 +44,6 @@ class MapActivity : AppCompatActivity() {
     private val upperRightLatitude: Double = 40.01008264838917
     private val upperRightLongitude: Double = -83.00504871849562
     private lateinit var geocodeAddress: Address
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 //    val geocodeListener = @RequiresApi(33) object : Geocoder.GeocodeListener {
 //        override fun onGeocode(addresses: MutableList<Address>) {
@@ -79,25 +77,6 @@ class MapActivity : AppCompatActivity() {
                     }
                 }
         )
-
-        val locationPermissionRequest = registerForActivityResult(
-                ActivityResultContracts.RequestMultiplePermissions()
-        ) { permissions ->
-            when {
-                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                    // Precise location access granted.
-                }
-                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                    // Only approximate location access granted.
-                } else -> {
-                // No location access granted.
-            }
-            }
-        }
-
-        locationPermissionRequest.launch(arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION))
     }
 
     private fun addAnnotationToMap(annotationLatitude: Double, annotationLongitude: Double) {
