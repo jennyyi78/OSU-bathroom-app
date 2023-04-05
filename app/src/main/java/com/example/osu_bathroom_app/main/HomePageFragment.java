@@ -13,10 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.osu_bathroom_app.R;
-import com.example.osu_bathroom_app.ui.MapActivity;
-import com.example.osu_bathroom_app.ui.UserProfileFragment;
 import com.example.osu_bathroom_app.ui.BathroomListFragment;
+import com.example.osu_bathroom_app.ui.MapActivity;
 import com.example.osu_bathroom_app.ui.MyReviewsFragment;
+import com.example.osu_bathroom_app.ui.UserProfileFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,8 +29,8 @@ public class HomePageFragment extends Fragment
 {
     View view;
     DatabaseReference ref;
-    private FirebaseAuth mAuth;
     Button toBathroomMap, toBathroomListBtn, toUserProfileBtn, toMyReviews;
+    private FirebaseAuth mAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,23 +42,27 @@ public class HomePageFragment extends Fragment
         toUserProfileBtn = view.findViewById(R.id.user_profile_btn);
         toBathroomMap = view.findViewById(R.id.map_btn);
         toBathroomListBtn = view.findViewById(R.id.bathroom_list_btn);
-        toMyReviews=view.findViewById(R.id.my_reviews_btn);
-        GlobalClass globalClass=(GlobalClass) getActivity().getApplicationContext();
+        toMyReviews = view.findViewById(R.id.my_reviews_btn);
+        GlobalClass globalClass = (GlobalClass) getActivity().getApplicationContext();
         mAuth = FirebaseAuth.getInstance();
-        String username=mAuth.getCurrentUser().getEmail();
+        String username = mAuth.getCurrentUser().getEmail();
         ref = FirebaseDatabase.getInstance().getReference().child("Users");
-        ref.child("user1").child("id").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        ref.child("user1").child("id").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>()
+        {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                long l=(long)task.getResult().getValue();
+            public void onComplete(@NonNull Task<DataSnapshot> task)
+            {
+                long l = (long) task.getResult().getValue();
                 globalClass.setUserId(l);
-                Log.i("Complete","Complete "+globalClass.getUserId());
+                Log.i("Complete", "Complete " + globalClass.getUserId());
             }
         });
 
-        toUserProfileBtn.setOnClickListener(new View.OnClickListener() {
+        toUserProfileBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 replaceFragment(new UserProfileFragment());
             }
         });
@@ -80,9 +84,11 @@ public class HomePageFragment extends Fragment
                 replaceFragment(new BathroomListFragment());
             }
         });
-        toMyReviews.setOnClickListener(new View.OnClickListener() {
+        toMyReviews.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 Log.i("My Clicked Button", "Clicked");
                 replaceFragment(new MyReviewsFragment());
             }

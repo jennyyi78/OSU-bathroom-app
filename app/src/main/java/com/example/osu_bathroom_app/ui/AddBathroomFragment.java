@@ -1,4 +1,3 @@
-
 package com.example.osu_bathroom_app.ui;
 
 
@@ -15,9 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.osu_bathroom_app.R;
-
 import com.example.osu_bathroom_app.model.Bathroom;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -61,10 +58,10 @@ public class AddBathroomFragment extends Fragment
         String bathroomAddress = address.getText().toString();
         Log.i("Key", "" + ref.getKey());
         //ref.child("BR1").setValue(new Bathroom(bathroomName,bathroomAddress));
-        long l=4;
-        float f=2.2f;
-        String info="info";
-        ref.push().setValue(new Bathroom(l,bathroomName, bathroomAddress,f,info));
+        long l = 4;
+        float f = 2.2f;
+        String info = "info";
+        ref.push().setValue(new Bathroom(l, bathroomName, bathroomAddress, f, info));
 
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

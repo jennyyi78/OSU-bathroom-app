@@ -1,4 +1,3 @@
-
 package com.example.osu_bathroom_app.view_model;
 
 
@@ -8,8 +7,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.osu_bathroom_app.repository.BathroomRepository;
 import com.example.osu_bathroom_app.model.Bathroom;
+import com.example.osu_bathroom_app.repository.BathroomRepository;
 
 import java.util.List;
 
@@ -53,7 +52,7 @@ public class BathroomListViewModel extends ViewModel
 
     public void resetBathroom()
     {
-        Log.i("Reset","test");
+        Log.i("Reset", "test");
         List<Bathroom> currentList = mBathrooms.getValue();
 
         mBathrooms.setValue(currentList);

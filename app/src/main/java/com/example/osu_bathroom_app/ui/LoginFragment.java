@@ -1,6 +1,4 @@
-
 package com.example.osu_bathroom_app.ui;
-
 
 
 import android.os.Bundle;
@@ -15,12 +13,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.osu_bathroom_app.main.HomePageFragment;
-import com.example.osu_bathroom_app.ui.RegisterFragment;
 import com.example.osu_bathroom_app.R;
+import com.example.osu_bathroom_app.main.HomePageFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

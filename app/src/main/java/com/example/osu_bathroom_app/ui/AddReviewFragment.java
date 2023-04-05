@@ -82,7 +82,7 @@ public class AddReviewFragment extends Fragment
         long n = 0;
         float rating = bar.getRating();
         String review = reviewText.getText().toString();
-        long l = (long) globalClass.getUserId();
+        long l = globalClass.getUserId();
         Log.i("BID", "" + bathroomId);
         FirebaseDatabase.getInstance().getReference().child("NumId").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>()
         {

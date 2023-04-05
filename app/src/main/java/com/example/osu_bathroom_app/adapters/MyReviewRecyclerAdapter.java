@@ -15,69 +15,82 @@ import com.example.osu_bathroom_app.model.Review;
 
 import java.util.List;
 
-public class MyReviewRecyclerAdapter extends RecyclerView.Adapter<MyReviewRecyclerAdapter.MyReviewViewHolder>{
+public class MyReviewRecyclerAdapter extends RecyclerView.Adapter<MyReviewRecyclerAdapter.MyReviewViewHolder>
+{
 
     Context context;
     List<Review> list;
-   OnNoteListener mOnNoteListener;
+    OnNoteListener mOnNoteListener;
     OnButtonClickListener bListener;
-
-    public interface OnButtonClickListener
-    {
-        void onButtonClick(int position);
-    }
-    public void setOnButtonClickListener(MyReviewRecyclerAdapter.OnButtonClickListener buttonListener)
-    {
-        bListener=buttonListener;
-    }
 
     public MyReviewRecyclerAdapter(Context context, List<Review> list, MyReviewRecyclerAdapter.OnNoteListener onNoteListener)
     {
-        this.context=context;
-        this.list=list;
-        this.mOnNoteListener=onNoteListener;
+        this.context = context;
+        this.list = list;
+        this.mOnNoteListener = onNoteListener;
+    }
+
+    public void setOnButtonClickListener(MyReviewRecyclerAdapter.OnButtonClickListener buttonListener)
+    {
+        bListener = buttonListener;
     }
 
     @NonNull
     @Override
-    public MyReviewRecyclerAdapter.MyReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyReviewRecyclerAdapter.MyReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
 
         View v = LayoutInflater.from(context).inflate(R.layout.myrvlist, parent, false);
-        return new MyReviewRecyclerAdapter.MyReviewViewHolder(v, mOnNoteListener,bListener);
+        return new MyReviewRecyclerAdapter.MyReviewViewHolder(v, mOnNoteListener, bListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyReviewViewHolder holder, int position) {
-        Review review =list.get(position);
-        float f=review.getRating();
+    public void onBindViewHolder(@NonNull MyReviewViewHolder holder, int position)
+    {
+        Review review = list.get(position);
+        float f = review.getRating();
         holder.rating.setText(Float.toString(f));
         holder.review.setText(review.getReview());
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return list.size();
+    }
+
+    public interface OnButtonClickListener
+    {
+        void onButtonClick(int position);
+    }
+
+    public interface OnNoteListener
+    {
+        void onNoteClick(int position);
     }
 
     public static class MyReviewViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
 
-        TextView rating,review;
+        TextView rating, review;
         Button delete;
         MyReviewRecyclerAdapter.OnNoteListener onNoteListener;
         MyReviewRecyclerAdapter.OnButtonClickListener bListener;
+
         public MyReviewViewHolder(@NonNull View itemView, MyReviewRecyclerAdapter.OnNoteListener onNoteListener, MyReviewRecyclerAdapter.OnButtonClickListener buttonClickListener)
         {
             super(itemView);
-            rating= itemView.findViewById(R.id.review_rating);
+            rating = itemView.findViewById(R.id.review_rating);
             review = itemView.findViewById(R.id.review_summary);
-            delete=itemView.findViewById(R.id.rv_list_delete);
+            delete = itemView.findViewById(R.id.rv_list_delete);
             this.onNoteListener = onNoteListener;
-            this.bListener=buttonClickListener;
+            this.bListener = buttonClickListener;
             itemView.setOnClickListener(this);
-            delete.setOnClickListener(new View.OnClickListener() {
+            delete.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view)
+                {
                     bListener.onButtonClick(getAdapterPosition());
                 }
             });
@@ -94,10 +107,6 @@ public class MyReviewRecyclerAdapter extends RecyclerView.Adapter<MyReviewRecycl
 
         }
 
-    }
-    public interface OnNoteListener
-    {
-        void onNoteClick(int position);
     }
 
 

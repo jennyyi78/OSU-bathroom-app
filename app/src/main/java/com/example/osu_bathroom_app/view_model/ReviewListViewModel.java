@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.osu_bathroom_app.model.Bathroom;
-import com.example.osu_bathroom_app.repository.BathroomRepository;
 import com.example.osu_bathroom_app.model.Review;
+import com.example.osu_bathroom_app.repository.BathroomRepository;
 
 import java.util.List;
 
-public class ReviewListViewModel extends ViewModel {
+public class ReviewListViewModel extends ViewModel
+{
 
     private MutableLiveData<List<Review>> mReviews;
 
@@ -25,14 +25,14 @@ public class ReviewListViewModel extends ViewModel {
         mRepo = BathroomRepository.getInstance();
         mReviews = mRepo.getReviews(id);
 
-       // Log.i("Help", "Me");
+        // Log.i("Help", "Me");
 
     }
+
     public LiveData<List<Review>> getReviews()
     {
         return mReviews;
     }
-
 
 
     public void resetReview()
