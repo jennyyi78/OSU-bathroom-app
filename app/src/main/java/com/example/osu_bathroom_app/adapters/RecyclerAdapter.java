@@ -131,7 +131,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             FirebaseUser user = mAuth.getCurrentUser();
 
             String email = user.getEmail();
-            if (!email.equals("admin@gmail.com")) {
+            if (!email.equals("jennyyi78@gmail.com")) {
                 deleteBtn.setVisibility(View.GONE);
             }
 

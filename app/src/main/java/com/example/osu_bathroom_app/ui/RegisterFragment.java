@@ -19,8 +19,10 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.osu_bathroom_app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterFragment extends Fragment
 {
@@ -100,6 +102,17 @@ public class RegisterFragment extends Fragment
             public void onComplete(@NonNull Task<AuthResult> task)
             {
                 if (task.isSuccessful()) {
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getActivity(), "Verification email sent.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), "Failed to send verification email.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                     Toast.makeText(getActivity().getApplicationContext(),
                                     "Registration successful!",
                                     Toast.LENGTH_LONG)

@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginFragment extends Fragment
@@ -107,14 +108,20 @@ public class LoginFragment extends Fragment
                                     @NonNull Task<AuthResult> task)
                             {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getActivity().getApplicationContext(),
-                                                    "Login successful!!",
-                                                    Toast.LENGTH_LONG)
-                                            .show();
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    if (user != null && user.isEmailVerified()) {
+                                        Toast.makeText(getActivity().getApplicationContext(),
+                                                        "Login successful!!",
+                                                        Toast.LENGTH_LONG)
+                                                .show();
 
-                                    // if sign-in is successful
-                                    // intent to home activity
-                                    replaceFragment(new HomePageFragment());
+                                        // if sign-in is successful
+                                        // intent to home activity
+                                        replaceFragment(new HomePageFragment());
+                                    } else {
+                                        Toast.makeText(getActivity(), "Please verify your email address.", Toast.LENGTH_SHORT).show();
+                                    }
+
                                 } else {
 
                                     // sign-in failed

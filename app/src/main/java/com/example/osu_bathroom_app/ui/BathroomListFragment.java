@@ -192,7 +192,7 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
         Log.i("Length", "" + mViewModel.getBathrooms().getValue().size());
 
         String email = user.getEmail();
-        if (!email.equals("admin@gmail.com")) {
+        if (!email.equals("jennyyi78@gmail.com")) {
             add.setVisibility(View.GONE);
         }
 
