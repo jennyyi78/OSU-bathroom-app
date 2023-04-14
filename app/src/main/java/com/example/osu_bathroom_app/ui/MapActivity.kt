@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.osu_bathroom_app.R
 import com.example.osu_bathroom_app.model.Bathroom
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
@@ -40,7 +39,6 @@ class MapActivity : AppCompatActivity() {
     private val upperRightLatitude: Double = 40.01008264838917
     private val upperRightLongitude: Double = -83.00504871849562
     private lateinit var geocodeAddress: Address
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 //    val geocodeListener = @RequiresApi(33) object : Geocoder.GeocodeListener {
 //        override fun onGeocode(addresses: MutableList<Address>) {
