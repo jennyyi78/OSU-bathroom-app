@@ -15,7 +15,7 @@ class MapLocationDialogFragment() : DialogFragment() {
         var address : String? = arguments?.getString("address")
         var avgRating : String? = arguments?.getString("avgRating")
         val msg = String.format("%s\nAverage Rating: %s", address, avgRating)
-        Log.i(TAG, "Arguments: " + arguments.toString())
+       // Log.i(TAG, "Arguments: " + arguments.toString())
         var dialog : Dialog =
                 AlertDialog.Builder(requireContext())
                         .setTitle(title)

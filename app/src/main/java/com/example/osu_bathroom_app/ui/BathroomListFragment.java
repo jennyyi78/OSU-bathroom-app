@@ -60,7 +60,7 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
     static Boolean canClick = true;
     Boolean loop = true;
     long bathroomId=0;
-    ArrayList<Bathroom> list;
+    List<Bathroom> list;
     String sortMethod;
     GlobalClass globalClass;
 
@@ -105,6 +105,8 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
             @Override
             public void onChanged(List<Bathroom> bathrooms)
             {
+
+                list=bathrooms;
                 adapter.notifyDataSetChanged();
             }
         });
@@ -129,7 +131,7 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
 
             @Override
             public void afterTextChanged(Editable editable) {
-                filter(editable.toString());
+                filter(editable.toString(),list);
             }
         });
         add.setOnClickListener(new View.OnClickListener()
@@ -195,11 +197,11 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
 
         return view;
     }
-    private void filter(String s)
+    private void filter(String s, List<Bathroom> b1)
     {
         Log.i("Search",s);
         ArrayList<Bathroom> br=new ArrayList<>();
-        for (Bathroom b:mViewModel.getBathrooms().getValue()) {
+        for (Bathroom b:b1) {
             if(b.getName().toLowerCase().contains(s)|| b.getAddress().toLowerCase().contains(s))
             {
                 br.add(b);
@@ -208,6 +210,21 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
         }
         adapter.filterList(br);
     }
+    public ArrayList<Bathroom> testFilter(String s, List<Bathroom> b1)
+    {
+        //Log.i("Search",s);
+        int length=s.length();
+        ArrayList<Bathroom> br=new ArrayList<>();
+        for (Bathroom b:b1) {
+            if(b.getName().toLowerCase().substring(0,length).equals(s)|| b.getAddress().toLowerCase().contains(s))
+            {
+                br.add(b);
+            }
+
+        }
+
+        return br;
+    }
     private void initRecyclerView()
     {
         //Log.i("Length",""+mViewModel.getBathrooms().getValue().size());
@@ -215,12 +232,7 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(adapter);
-        adapter.setOnButtonClickListener(new RecyclerAdapter.OnButtonClickListener() {
-            @Override
-            public void onButtonClick(int position) {
-                mViewModel.removeBathroom(position);
-            }
-        });
+        adapter.setOnButtonClickListener(position -> mViewModel.removeBathroom(position));
     }
 
     private void infoFragment(String name, String address, long id)
@@ -269,38 +281,30 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
     public void sortBathrooms(int method)
     {
         if (method == 0) {
-            Collections.sort(mViewModel.getBathrooms().getValue(), new Comparator<Bathroom>()
-            {
-                @Override
-                public int compare(Bathroom bathroom, Bathroom t1)
-                {
-                    return bathroom.getName().compareToIgnoreCase(t1.getName());
-                }
-            });
+            Collections.sort(list, (bathroom, t1) -> bathroom.getName().compareTo(t1.getName()));
         } else if (method == 1) {
-            Collections.sort(mViewModel.getBathrooms().getValue(), new Comparator<Bathroom>()
-            {
-                @Override
-                public int compare(Bathroom bathroom, Bathroom t1)
-                {
-                    return t1.getName().compareToIgnoreCase(bathroom.getName());
-                }
-            });
+            Collections.sort(list, (bathroom, t1) -> t1.getName().compareTo(bathroom.getName()));
         }
 
         adapter.notifyDataSetChanged();
+    }
+
+    public List<Bathroom> testSortBathrooms(int method, List<Bathroom> l)
+    {
+        if (method == 0) {
+            Collections.sort(l, (bathroom, t1) -> bathroom.getName().compareTo(t1.getName()));
+        } else if (method == 1) {
+            Collections.sort(l, (bathroom, t1) -> t1.getName().compareTo(bathroom.getName()));
+        }
+
+        return l;
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
     {
         sortMethod = adapterView.getItemAtPosition(i).toString();
-        if (sortMethod.equals("A-Z")) {
-            Log.i("spinner", "A-Z");
-        }
-        if (sortMethod.equals("Z-A")) {
-            Log.i("spinner", "Z-A");
-        }
+
     }
 
     @Override

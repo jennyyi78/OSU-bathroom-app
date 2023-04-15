@@ -28,8 +28,9 @@ import com.google.firebase.database.FirebaseDatabase;
 public class HomePageFragment extends Fragment
 {
     View view;
-    DatabaseReference ref;
-    private FirebaseAuth mAuth;
+    static boolean userIdRetrieved=false;
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     Button toBathroomMap, toBathroomListBtn, toUserProfileBtn, toMyReviews;
 
     @Override
@@ -44,17 +45,17 @@ public class HomePageFragment extends Fragment
         toBathroomListBtn = view.findViewById(R.id.bathroom_list_btn);
         toMyReviews=view.findViewById(R.id.my_reviews_btn);
         GlobalClass globalClass=(GlobalClass) getActivity().getApplicationContext();
-        mAuth = FirebaseAuth.getInstance();
+
         String username=mAuth.getCurrentUser().getEmail();
-        ref = FirebaseDatabase.getInstance().getReference().child("Users");
-        ref.child("user1").child("id").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                long l=(long)task.getResult().getValue();
+
+        if(!userIdRetrieved) {
+            ref.child("user1").child("id").get().addOnCompleteListener(task -> {
+                long l = (long) task.getResult().getValue();
                 globalClass.setUserId(l);
-                Log.i("Complete","Complete "+globalClass.getUserId());
-            }
-        });
+                Log.i("Complete", "Complete " + globalClass.getUserId());
+            });
+            userIdRetrieved=true;
+        }
 
         toUserProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,7 +7,10 @@ plugins {
 android {
     namespace 'com.example.osu_bathroom_app'
     compileSdk 33
+    testOptions {
+        unitTests.returnDefaultValues = true
 
+    }
     defaultConfig {
         applicationId "com.example.osu_bathroom_app"
         minSdk 24
@@ -48,17 +51,21 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation 'com.google.firebase:firebase-common-ktx:20.3.2'
     //noinspection LifecycleAnnotationProcessorWithJava8
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
     implementation 'com.r0adkll:slidableactivity:2.0.6'
-
+    implementation 'androidx.test:monitor:1.6.1'
+    implementation 'androidx.test:core:1.5.0'
     implementation platform('com.google.firebase:firebase-bom:31.2.2')
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:2.19.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation 'com.google.firebase:firebase-database:20.1.0'
     implementation 'com.google.firebase:firebase-auth'
+
 }

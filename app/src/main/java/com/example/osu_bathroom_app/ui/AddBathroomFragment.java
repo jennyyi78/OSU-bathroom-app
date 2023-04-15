@@ -61,7 +61,7 @@ public class AddBathroomFragment extends Fragment
         String bathroomAddress = address.getText().toString();
         Log.i("Key", "" + ref.getKey());
         //ref.child("BR1").setValue(new Bathroom(bathroomName,bathroomAddress));
-        long l=4;
+        long l=6;
         float f=2.2f;
         String info="info";
         ref.push().setValue(new Bathroom(l,bathroomName, bathroomAddress,f,info));

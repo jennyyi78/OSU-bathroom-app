@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.osu_bathroom_app.model.Bathroom;
 import com.example.osu_bathroom_app.model.Favorite;
 import com.example.osu_bathroom_app.model.Review;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +39,7 @@ public class BathroomRepository {
     }
 
     public MutableLiveData<List<Bathroom>> getBathrooms() {
+
         setBathrooms();
 
         MutableLiveData<List<Bathroom>> data = new MutableLiveData<>();
@@ -46,6 +48,7 @@ public class BathroomRepository {
 
         return data;
     }
+
 
     public MutableLiveData<List<Review>> getReviews(long id) {
         setReviews(id);
@@ -72,7 +75,7 @@ public class BathroomRepository {
 
     private void setBathrooms() //where data is retrieved from firebase
     {
-        Log.i("Keys", "Help");
+       // Log.i("Keys", "Help");
 
         ExecutorService service = Executors.newSingleThreadExecutor();
         ArrayList<String> list = new ArrayList<String>();
@@ -83,7 +86,7 @@ public class BathroomRepository {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("Keys", "Help");
+             //   Log.i("Keys", "Help");
 
                 dataSet.clear();
 
