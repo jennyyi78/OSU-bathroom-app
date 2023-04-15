@@ -3,13 +3,127 @@
   <component name="AndroidTestResultsUserPreferences">
     <option name="androidTestResultsTableState">
       <map>
-        <entry key="28629151">
+        <entry key="-2126252740">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
+                  <entry key="711KPUU0993966" value="120" />
                   <entry key="Duration" value="90" />
-                  <entry key="Pixel_6_Pro_API_33" value="120" />
+                  <entry key="Google" value="120" />
+                  <entry key="Google&#10; Pixel 2 XL" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-1174452148">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="711KPUU0993966" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Google&#10; Pixel 2 XL" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-1086254768">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="711KPUU0993966" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Google&#10; Pixel 2 XL" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-876619835">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="711KPUU0993966" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Google&#10; Pixel 2 XL" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="28224289">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="711KPUU0993966" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Google&#10; Pixel 2 XL" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="139458473">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="711KPUU0993966" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Google&#10; Pixel 2 XL" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="557583505">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="711KPUU0993966" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Google&#10; Pixel 2 XL" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="565792452">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="711KPUU0993966" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Google&#10; Pixel 2 XL" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="654026404">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="711KPUU0993966" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Google&#10; Pixel 2 XL" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
