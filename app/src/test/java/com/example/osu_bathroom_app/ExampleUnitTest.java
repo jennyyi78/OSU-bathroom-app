@@ -1,11 +1,26 @@
 package com.example.osu_bathroom_app;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+
+import androidx.annotation.NonNull;
 import androidx.test.core.app.ActivityScenario;
 import android.app.Application;
 import android.content.Context;
@@ -21,6 +36,11 @@ import com.example.osu_bathroom_app.repository.BathroomRepository;
 import com.example.osu_bathroom_app.ui.BathroomListFragment;
 import com.example.osu_bathroom_app.ui.MainActivity;
 import com.example.osu_bathroom_app.view_model.BathroomListViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,14 +57,35 @@ import java.util.List;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
+@PowerMockRunnerDelegate(JUnit4.class)
+@PowerMockIgnore("jdk.internal.reflect.*")
+@PrepareForTest({ FirebaseDatabase.class})
 public class ExampleUnitTest {
-
-    DatabaseReference ref;
+    private static final String DB_URL = "https://osu-bathroom-app-default-rtdb.firebaseio.com/";
+    @InjectMocks
+    BathroomListFragment frag=new BathroomListFragment();
+    private DatabaseReference ref;
     private BathroomRepository mRepo;
     private MutableLiveData<List<Bathroom>> mBathrooms;
     FirebaseDatabase database;
     FirebaseApp app;
+    private static FirebaseApp testApp;
+    Task<AuthResult> successTask;
+    @Mock
+    FirebaseAuth mAuth;
+    //FirebaseDatabase mockedFirebaseDatabase = Mockito.mock(FirebaseDatabase.class);
+    @Before
+    public void before() {
+
+        ref = Mockito.mock(DatabaseReference.class);
+        FirebaseDatabase mockedFirebaseDatabase = Mockito.mock(FirebaseDatabase.class);
+        PowerMockito.mockStatic(FirebaseDatabase.class);
+        PowerMockito.when(FirebaseDatabase.getInstance("https://osu-bathroom-app-default-rtdb.firebaseio.com/")).thenReturn(mockedFirebaseDatabase);
+        Mockito.when(mockedFirebaseDatabase.getReferenceFromUrl("https://osu-bathroom-app-default-rtdb.firebaseio.com/")).thenReturn(ref);
+
+
+    }
 
 
 
@@ -72,7 +113,44 @@ public class ExampleUnitTest {
         assertEquals(list.size(),2);
 
     }
+    @Test
+    public void testFailedSearch() {
 
+        BathroomListFragment frag=new BathroomListFragment();
+        List<Bathroom> l=new ArrayList<Bathroom>();
+        Bathroom b1 = new Bathroom(1, "Apple", "240 Fondiller", 4.1f, "info");
+        Bathroom b2 = new Bathroom(2, "Baker", "1 North", 4.2f, "info");
+        Bathroom b3 = new Bathroom(3, "Car", "test street", 1.1f, "info");
+        Bathroom b4 = new Bathroom(4, "Adam", "test street", 1.1f, "info");
+        l.add(b1);
+        l.add(b2);
+        l.add(b3);
+        l.add(b4);
+
+        ArrayList<Bathroom> b=frag.testFilter("dog",l);
+        assertEquals(b.size(),0);
+
+
+    }
+    @Test
+    public void testAddressSearch() {
+
+        BathroomListFragment frag=new BathroomListFragment();
+        List<Bathroom> l=new ArrayList<Bathroom>();
+        Bathroom b1 = new Bathroom(1, "Apple", "240 Fondiller", 4.1f, "info");
+        Bathroom b2 = new Bathroom(2, "Baker", "1 North", 4.2f, "info");
+        Bathroom b3 = new Bathroom(3, "Car", "test street", 1.1f, "info");
+        Bathroom b4 = new Bathroom(4, "Adam", "test street", 1.1f, "info");
+        l.add(b1);
+        l.add(b2);
+        l.add(b3);
+        l.add(b4);
+
+        ArrayList<Bathroom> b=frag.testFilter("240",l);
+        assertEquals(b.get(0).getName(),"Apple");
+
+
+    }
     @Test
     public void testSort() {
         BathroomListFragment frag=new BathroomListFragment();
@@ -95,41 +173,9 @@ public class ExampleUnitTest {
 
 
     }
-    @Test
-    public void test() {
-       BathroomListViewModel v=new BathroomListViewModel();
-       v.init();
 
 
 
-    }
-   /* @Test
-    public void checkBathroomRetrieval() {
-       //FirebaseApp.initializeApp(InstrumentationRegistry.getInstrumentation().getTargetContext());
-       // mRepo = BathroomRepository.getInstance();
-       // mBathrooms=mRepo.getBathrooms();
-        MainActivity main
-        FirebaseApp.initializeApp();
-       FirebaseDatabase f= Mockito.mock(FirebaseDatabase.class);
-       Mockito.when(f.getInstance().getReference().child("Bathrooms")).thenReturn(ref);
-       // ref= f.getInstance().getReference().child("Bathrooms");
-       /* long modelLength=mBathrooms.getValue().size();
-        final long[] repLength = {0};
-        ref.addListenerForSingleValueEvent(new ValueEventListener() { //ref will be your desired path where you want to count children
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {   // Check for data snapshot has some value
-                    repLength[0] =dataSnapshot.getChildrenCount();  // check for counts of data snapshot children
-                }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-
-        assertEquals(modelLength,repLength[0]);
-
-    }*/
 }

@@ -40,6 +40,7 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
     long id;
     Button exit_button;
     Button add_favorite_button;
+    private Button linkToHomePageBtn;
     DatabaseReference favoriteRef;
     GlobalClass globalClass;
     private FirebaseAuth mAuth;
@@ -60,6 +61,7 @@ public class BathroomInfoFragment extends DialogFragment implements View.OnTouch
         info_button = view.findViewById(R.id.view_button);
         id = bundle.getLong("Id");
         add_favorite_button = view.findViewById(R.id.add_favorite_button);
+
 
         favoriteRef = FirebaseDatabase.getInstance().getReference().child("Favorites");
 

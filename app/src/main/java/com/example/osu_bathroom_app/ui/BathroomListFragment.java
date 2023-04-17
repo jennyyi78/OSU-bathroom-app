@@ -199,6 +199,10 @@ public class BathroomListFragment extends Fragment implements RecyclerAdapter.On
     }
     private void filter(String s, List<Bathroom> b1)
     {
+        if(b1==null)
+        {
+            b1=mViewModel.getBathrooms().getValue();
+        }
         Log.i("Search",s);
         ArrayList<Bathroom> br=new ArrayList<>();
         for (Bathroom b:b1) {

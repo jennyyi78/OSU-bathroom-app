@@ -102,6 +102,12 @@ public class AddReviewFragment extends Fragment
 
     }
 
+    public void addTestReview() {
+
+
+
+    }
+
     private void returnToBathroomList()
     {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
